@@ -23,7 +23,7 @@ export const GROOM_PORTRAIT: GalleryPhotoSrc = "/IMG_7010.jpeg";
 export const BRIDE_PORTRAIT: GalleryPhotoSrc = "/IMG_7011.jpeg";
 /** About the Couple — bride letter section (studio portrait). */
 export const ABOUT_BRIDE_IMAGE: GalleryPhotoSrc = "/IMG_7011.jpeg";
-export const SITE_ICON: GalleryPhotoSrc = "/IMG_7010.jpeg";
+export const SITE_ICON: GalleryPhotoSrc = "/IMG_7011.jpeg";
 
 /** Hero background slideshow — face-forward shots with tuned crop anchors. */
 export const HERO_PHOTOS = [

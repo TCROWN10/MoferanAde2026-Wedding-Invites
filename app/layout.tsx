@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   description:
     "Wedding invitation for Soje Anuoluwapo Feranmi & Emmanuel Segun Ademola — A celebration of love, faith, and friendship.",
   icons: {
-    icon: "/IMG_7010.jpeg",
-    apple: "/IMG_7010.jpeg",
+    icon: { url: "/favicon.png", type: "image/png", sizes: "192x192" },
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180" },
   },
 };
 
