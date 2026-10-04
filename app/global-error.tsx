@@ -24,8 +24,8 @@ export default function GlobalError({
             marginTop: "1rem",
             padding: "0.5rem 1.25rem",
             borderRadius: "9999px",
-            border: "2px solid #e85d6f",
-            background: "#fce4e8",
+            border: "2px solid #046c4e",
+            background: "#f7e7ce",
             cursor: "pointer",
           }}
         >

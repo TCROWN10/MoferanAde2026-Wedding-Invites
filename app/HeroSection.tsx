@@ -41,7 +41,7 @@ function HeroPortrait({
 }) {
   return (
     <div
-      className="relative h-[clamp(3.5rem,11vw,7.5rem)] w-[clamp(3.5rem,11vw,7.5rem)] shrink-0 overflow-hidden rounded-full border-2 border-white/80 shadow-[0_8px_28px_rgba(0,0,0,0.5)] ring-2 ring-[#D4AF37]/50"
+      className="relative h-[clamp(2.75rem,11vw,7.5rem)] w-[clamp(2.75rem,11vw,7.5rem)] shrink-0 overflow-hidden rounded-full border-2 border-white/80 shadow-[0_8px_28px_rgba(0,0,0,0.5)] ring-2 ring-[#D4AF37]/50"
       aria-hidden={alt === ""}
     >
       <Image
@@ -164,16 +164,16 @@ export default function HeroSection() {
           <div
             className={`${playfair.className} flex items-baseline gap-1 text-2xl font-black tracking-tight text-foreground sm:text-3xl md:text-[1.85rem] lg:text-4xl`}
           >
-            <span className="font-black">M</span>
-            <span className="translate-y-px text-base font-black text-[#800000] sm:text-lg md:text-xl lg:text-2xl">
+            <span className="font-black">F</span>
+            <span className="translate-y-px text-base font-black text-[#c9a961] sm:text-lg md:text-xl lg:text-2xl">
               &amp;
             </span>
-            <span className="font-black">T</span>
+            <span className="font-black">A</span>
           </div>
           <span
-            className={`${playfair.className} text-[0.62rem] font-extrabold uppercase tracking-[0.32em] text-foreground sm:text-[0.68rem] md:text-xs`}
+            className={`${playfair.className} text-[0.62rem] font-extrabold tracking-[0.32em] text-foreground sm:text-[0.68rem] md:text-xs`}
           >
-            #TheOriakhiTakeover2026
+            #moFeranAde’26
           </span>
         </a>
 
@@ -223,8 +223,8 @@ export default function HeroSection() {
           aria-label="Close menu overlay"
         />
         <nav
-          className={`absolute right-0 top-0 flex h-full w-[min(20rem,88vw)] flex-col bg-background shadow-2xl transition-transform duration-300 ease-out ${
-            menuOpen ? "translate-x-0" : "translate-x-full"
+          className={`absolute right-0 top-0 flex h-full w-[min(20rem,88vw)] flex-col bg-background transition-transform duration-300 ease-out ${
+            menuOpen ? "translate-x-0 shadow-2xl" : "translate-x-full shadow-none"
           }`}
           aria-label="Mobile navigation"
         >
@@ -295,7 +295,7 @@ export default function HeroSection() {
 
         <div className="relative z-20 flex min-h-[calc(100dvh-5.5rem)] flex-col items-center px-5 pb-6 pt-8 text-center text-white md:px-8">
           <div className="flex w-full max-w-4xl flex-1 flex-col items-center justify-center py-6">
-            <p className="mb-5 text-sm font-semibold uppercase tracking-[0.28em] text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.4)] md:mb-6 md:text-base lg:text-lg">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-white sm:text-sm sm:tracking-[0.28em] drop-shadow-[0_1px_4px_rgba(0,0,0,0.4)] md:mb-6 md:text-base lg:text-lg">
               The Beginning of Always
             </p>
 
@@ -307,9 +307,9 @@ export default function HeroSection() {
               />
 
               <h1
-                className={`${playfair.className} min-w-0 flex-1 text-center font-black leading-none tracking-tight text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.45)] text-[clamp(1.35rem,calc(0.55rem+3.8vw),6.5rem)]`}
+                className={`${playfair.className} min-w-0 flex-1 text-center font-black leading-none tracking-tight text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.45)] text-[clamp(1.35rem,calc(0.55rem+3.8vw),6.5rem)] max-sm:whitespace-nowrap max-sm:text-[5.4vw]`}
               >
-                Motunrayo <span className="font-black text-white/95">&amp;</span> Thomson
+                Feranmi <span className="font-black text-white/95">&amp;</span> Ademola
               </h1>
 
               <HeroPortrait

@@ -13,16 +13,16 @@ const playfair = Playfair_Display({
 });
 const ui = DM_Sans({ subsets: ["latin"], weight: ["600", "700", "800"] });
 
-const RING_STROKE = "#e8a0a8";
+const RING_STROKE = "#d8bc82";
 
 const RING_LIGHT_STOPS = [
-  { offset: "0%", color: "#fbbf24" },
-  { offset: "16%", color: "#f59e0b" },
-  { offset: "32%", color: "#a3e635" },
-  { offset: "48%", color: "#34d399" },
-  { offset: "64%", color: "#22d3ee" },
-  { offset: "80%", color: "#60a5fa" },
-  { offset: "100%", color: "#6366f1" },
+  { offset: "0%", color: "#f7e7ce" },
+  { offset: "16%", color: "#e6c98f" },
+  { offset: "32%", color: "#c9a961" },
+  { offset: "48%", color: "#2e8b67" },
+  { offset: "64%", color: "#046c4e" },
+  { offset: "80%", color: "#c9a961" },
+  { offset: "100%", color: "#f7e7ce" },
 ] as const;
 
 const VIEWBOX = 480;
@@ -242,7 +242,7 @@ export default function InvitationLanding() {
             <h1
               className={`${playfair.className} text-balance font-black leading-tight tracking-tight text-foreground text-[clamp(1.35rem,calc(0.85rem+3.8vw),2.85rem)]`}
             >
-              Motunrayo <span className="font-black text-foreground/90">&amp;</span> Thomson
+              Feranmi <span className="font-black text-foreground/90">&amp;</span> Ademola
             </h1>
             <Link
               href="/celebration"
@@ -253,7 +253,7 @@ export default function InvitationLanding() {
                   /* private mode */
                 }
               }}
-              className="mt-5 inline-flex min-h-10 w-auto shrink-0 items-center justify-center self-center whitespace-nowrap rounded-full border-2 border-[#e85d6f] bg-[#fce4e8] px-4 py-2 text-sm font-semibold tracking-wide text-foreground shadow-sm transition-colors hover:bg-[#f8d0d8] md:mt-6 md:px-5 md:py-2.5"
+              className="mt-5 inline-flex min-h-10 w-auto shrink-0 items-center justify-center self-center whitespace-nowrap rounded-full border-2 border-[#046c4e] bg-[#f7e7ce] px-4 py-2 text-sm font-semibold tracking-wide text-foreground shadow-sm transition-colors hover:bg-[#efd9b0] md:mt-6 md:px-5 md:py-2.5"
             >
               Open Invitation
             </Link>
@@ -262,10 +262,10 @@ export default function InvitationLanding() {
       </div>
 
       <div
-        className="mx-auto mt-2 max-w-sm rounded-xl border border-[#e85d6f]/45 bg-[#fce4e8]/90 px-4 py-3 text-center shadow-sm sm:mt-4"
+        className="mx-auto mt-2 max-w-sm rounded-xl border border-[#046c4e]/45 bg-[#f7e7ce]/90 px-4 py-3 text-center shadow-sm sm:mt-4"
         role="note"
       >
-        <p className="text-sm font-bold tracking-wide text-[#c44556]">
+        <p className="text-sm font-bold tracking-wide text-[#046c4e]">
           No Access Card — No Entry
         </p>
         <p className="mt-1 text-xs font-semibold text-foreground/75">

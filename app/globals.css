@@ -3,16 +3,17 @@
 /* Explicit scan paths — avoids missing utilities when the workspace root / lockfile detection is unusual */
 @source "./**/*.{ts,tsx,js,jsx,mdx}";
 @source "../lib/**/*.{ts,tsx,js,jsx}";
+@source "../src/**/*.{ts,tsx,js,jsx}";
 
 :root {
-  --background: #fffbf7;
-  --foreground: #3d4a2c;
-  --pink: #5c6b3c;
-  --pink-light: #718356;
-  --pink-soft: #f5d4bc;
-  --text-muted: #6b7560;
-  --accent-green: #f0c9a8;
-  --accent-gold: #c4a882;
+  --background: #fffcf5;
+  --foreground: #1f3d2f;
+  --pink: #046c4e;
+  --pink-light: #2e8b67;
+  --pink-soft: #f1e3c6;
+  --text-muted: #5f6f66;
+  --accent-green: #d8bc82;
+  --accent-gold: #c9a961;
 }
 
 html {
@@ -447,5 +448,1690 @@ a[aria-disabled="true"] {
   .landing-ring-light-beam--soft {
     animation: none;
     stroke-dashoffset: 0;
+  }
+}
+
+/* ── Envelope opening intro ── */
+@property --env-paper {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #c9a24b;
+}
+
+@property --env-inside {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #7a5a1e;
+}
+
+@property --env-ink {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #3a2a0a;
+}
+
+@property --env-crease {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #5a4410;
+}
+
+/* Gold → black → red → white, resting on each colour before blending to the next */
+@keyframes envelope-colour-cycle {
+  0%,
+  20%,
+  100% {
+    --env-paper: #c9a24b;
+    --env-inside: #7a5a1e;
+    --env-ink: #3a2a0a;
+    --env-crease: #5a4410;
+  }
+  25%,
+  45% {
+    --env-paper: #161616;
+    --env-inside: #000000;
+    --env-ink: #f1e3c6;
+    --env-crease: #d8bc82;
+  }
+  50%,
+  70% {
+    --env-paper: #9e1b23;
+    --env-inside: #4a080d;
+    --env-ink: #f1e3c6;
+    --env-crease: #d8bc82;
+  }
+  75%,
+  95% {
+    --env-paper: #f7f3ea;
+    --env-inside: #d9d0bd;
+    --env-ink: #9e1b23;
+    --env-crease: #c9a961;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html .envelope-root {
+    animation: none;
+  }
+}
+.envelope-root {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: transparent;
+  color: var(--env-ink);
+  animation: envelope-colour-cycle 16s ease-in-out infinite;
+}
+
+.envelope-root--opening {
+  pointer-events: none;
+  animation-play-state: paused;
+}
+
+.envelope-tap-target {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.envelope-tap-target:disabled {
+  cursor: default;
+}
+
+.envelope-tap-target:focus-visible {
+  outline: 2px solid var(--env-ink);
+  outline-offset: -6px;
+}
+
+/* Everything except the top flap: side flaps, the "^" bottom flap and the wording */
+.envelope-body {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.envelope-side {
+  position: absolute;
+  inset: 0;
+  background-color: color-mix(in srgb, var(--env-paper) 86%, black);
+}
+
+.envelope-side--left {
+  clip-path: polygon(0 0, 51% 50%, 0 100%);
+}
+
+.envelope-side--right {
+  clip-path: polygon(100% 0, 49% 50%, 100% 100%);
+}
+
+.envelope-bottom-wrap {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 -4px 10px rgba(0, 0, 0, 0.28));
+}
+
+.envelope-bottom {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+  background-color: color-mix(in srgb, var(--env-paper) 94%, white);
+}
+
+/* Soft shadow the top flap casts on the envelope; fades as the flap lifts */
+.envelope-flap-shadow {
+  position: absolute;
+  inset: 0;
+  filter: blur(9px);
+  opacity: 0.45;
+  transition: opacity 0.5s ease;
+}
+
+.envelope-flap-shadow > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  transform: translateY(8px);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: black;
+}
+
+.envelope-flap-shadow--hide {
+  opacity: 0;
+}
+
+.envelope-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 68%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1.5rem calc(env(safe-area-inset-bottom) + 1rem);
+  text-align: center;
+}
+
+.envelope-front-text {
+  font-size: clamp(2.25rem, 9vw, 3.5rem);
+  line-height: 1.1;
+  color: var(--env-ink);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+}
+
+.envelope-tap-hint {
+  margin-top: 0.5rem;
+  font-size: clamp(0.6875rem, 2.8vw, 0.8rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--env-ink) 70%, transparent);
+  transition: opacity 0.4s ease;
+}
+
+.envelope-tap-hint--hidden {
+  opacity: 0;
+}
+
+@media (min-width: 640px) {
+  .envelope-tap-hint {
+    letter-spacing: 0.38em;
+  }
+}
+
+/* Top "v" flap — hinged on the top edge, opens upward in 3D */
+.envelope-flap-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  z-index: 30;
+  perspective: clamp(800px, 120vw, 1400px);
+  perspective-origin: 50% 0%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.envelope-flap-unit {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.envelope-flap-face {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.envelope-flap-face--front {
+  background-color: var(--env-paper);
+  filter: brightness(0.94);
+}
+
+.envelope-flap-face--back {
+  background-color: color-mix(in srgb, var(--env-paper) 55%, white);
+  transform: rotateX(180deg);
+}
+
+/* Photo seal — rides on the flap's point and lifts away with it */
+.envelope-seal {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 40;
+  height: clamp(5rem, 24vw, 7.5rem);
+  width: clamp(5rem, 24vw, 7.5rem);
+  transform: translate(-50%, 50%) translateZ(1px);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.envelope-seal-inner {
+  position: absolute;
+  inset: 0;
+}
+
+.envelope-seal-body {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+  border: 3px solid #d8bc82;
+  background-color: #1a1a1a;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.envelope-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: envelope-slideshow 9s ease-in-out infinite both;
+  animation-delay: var(--slide-offset, 0s);
+}
+
+.envelope-slide:nth-child(2) {
+  animation-delay: calc(var(--slide-offset, 0s) - 6s);
+}
+
+.envelope-slide:nth-child(3) {
+  animation-delay: calc(var(--slide-offset, 0s) - 3s);
+}
+
+@keyframes envelope-slideshow {
+  0%,
+  30% {
+    opacity: 1;
+  }
+  36%,
+  94% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.envelope-slide-photo {
+  object-fit: cover;
+}
+
+/* Bouncing photo frames — one in each of the four envelope triangles */
+.envelope-badge {
+  position: absolute;
+  z-index: 5;
+  width: min(clamp(3.75rem, 17vw, 6.5rem), 12dvh);
+  height: min(clamp(3.75rem, 17vw, 6.5rem), 12dvh);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .envelope-text {
+    top: 61%;
+  }
+
+  .envelope-badge--bottom {
+    top: 90%;
+  }
+}
+
+.envelope-badge--left {
+  left: 17%;
+  top: 50%;
+}
+
+.envelope-badge--right {
+  left: 83%;
+  top: 50%;
+}
+
+.envelope-badge--bottom {
+  left: 50%;
+  top: 89%;
+}
+
+/* Lives on the flap (coordinates relative to the flap), so it lifts away with it */
+.envelope-badge--top {
+  left: 50%;
+  top: 34%;
+  transform: translate(-50%, -50%) translateZ(1px);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.envelope-badge-bounce {
+  position: absolute;
+  inset: 0;
+  animation: envelope-badge-bounce 2.4s ease-in-out infinite;
+}
+
+@keyframes envelope-badge-bounce {
+  0%,
+  100% {
+    translate: 0 0;
+    scale: 1;
+  }
+  30% {
+    translate: 0 -14%;
+    scale: 1.04;
+  }
+  50% {
+    translate: 0 0;
+    scale: 0.98;
+  }
+  65% {
+    translate: 0 -5%;
+    scale: 1.01;
+  }
+}
+
+.envelope-badge-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+  border: 2px solid #d8bc82;
+  background-color: #1a1a1a;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.envelope-seal-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  box-shadow:
+    inset 0 2px 8px rgba(255, 245, 220, 0.35),
+    inset 0 -6px 14px rgba(0, 0, 0, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .envelope-slide,
+  .envelope-badge-bounce {
+    animation: none;
+  }
+
+  .envelope-slide:first-child {
+    opacity: 1;
+  }
+}
+
+@media (max-height: 600px) {
+  .envelope-text {
+    top: 66%;
+  }
+
+  .envelope-front-text {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+
+  .envelope-seal {
+    height: clamp(3.75rem, 16vw, 5rem);
+    width: clamp(3.75rem, 16vw, 5rem);
+  }
+
+  .envelope-badge {
+    width: clamp(3rem, 12vw, 4.25rem);
+    height: clamp(3rem, 12vw, 4.25rem);
+  }
+}
+
+/* ── Event ticket cards (Join Us section) ── */
+.event-ticket {
+  --ticket-notch: var(--background);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(216, 188, 130, 0.55);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(216, 188, 130, 0.18) 0%, transparent 60%),
+    radial-gradient(90% 60% at 50% 110%, rgba(0, 0, 0, 0.35) 0%, transparent 70%),
+    linear-gradient(160deg, #067a59 0%, #04563f 45%, #023527 100%);
+  color: #f1e3c6;
+  text-align: center;
+  box-shadow:
+    0 24px 48px -24px rgba(2, 53, 39, 0.6),
+    0 10px 20px -12px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 5px #04563f,
+    inset 0 0 0 6px rgba(216, 188, 130, 0.35);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+}
+
+@media (hover: hover) {
+  .event-ticket:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 34px 56px -24px rgba(2, 53, 39, 0.68),
+      0 14px 26px -12px rgba(0, 0, 0, 0.3),
+      inset 0 0 0 5px #04563f,
+      inset 0 0 0 6px rgba(216, 188, 130, 0.5);
+  }
+}
+
+.event-ticket-shine {
+  position: absolute;
+  inset: -50% -20%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 240, 210, 0.12) 48%,
+    rgba(255, 240, 210, 0.22) 50%,
+    rgba(255, 240, 210, 0.12) 52%,
+    transparent 60%
+  );
+  animation: event-ticket-sweep 6s ease-in-out infinite;
+}
+
+@keyframes event-ticket-sweep {
+  0%,
+  15% {
+    translate: -60% 0;
+  }
+  55%,
+  100% {
+    translate: 60% 0;
+  }
+}
+
+.event-ticket-ornament {
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #d8bc82;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.event-ticket-ornament--tl {
+  top: 0.75rem;
+  left: 0.75rem;
+}
+
+.event-ticket-ornament--br {
+  bottom: 0.75rem;
+  right: 0.75rem;
+  transform: scale(-1, -1);
+}
+
+.event-ticket-section {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.75rem 1.5rem;
+}
+
+.event-ticket-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: rgba(241, 227, 198, 0.75);
+}
+
+.event-ticket-script {
+  margin-top: 0.35rem;
+  font-size: clamp(1.9rem, 7vw, 2.5rem);
+  line-height: 1.15;
+  color: #f7e7ce;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+.event-ticket-date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+}
+
+.event-ticket-date-side {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #f1e3c6;
+}
+
+.event-ticket-date-rule {
+  flex-shrink: 0;
+  width: 1px;
+  align-self: stretch;
+  min-height: 3.25rem;
+  background: linear-gradient(180deg, transparent, #d8bc82, transparent);
+}
+
+.event-ticket-date-day {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(3.75rem, 15vw, 5rem);
+  font-weight: 700;
+  line-height: 1;
+  padding: 0 0.04em 0.08em;
+}
+
+.event-ticket-foil {
+  background: linear-gradient(
+    110deg,
+    #b8913f 0%,
+    #f7e7ce 22%,
+    #d8bc82 40%,
+    #fff4dc 52%,
+    #c9a961 68%,
+    #f3dfa8 85%,
+    #b8913f 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: event-ticket-foil 5s linear infinite;
+}
+
+@keyframes event-ticket-foil {
+  to {
+    background-position: -220% 0;
+  }
+}
+
+/* Perforated tear line with ticket notches */
+.event-ticket-tear {
+  position: relative;
+  flex-shrink: 0;
+  height: 1.75rem;
+  margin: 0 -1px;
+}
+
+.event-ticket-tear::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 1.4rem;
+  right: 1.4rem;
+  border-top: 2px dashed rgba(216, 188, 130, 0.5);
+}
+
+.event-ticket-tear::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 0 50%, var(--ticket-notch) 0.8rem, transparent 0.85rem),
+    radial-gradient(circle at 100% 50%, var(--ticket-notch) 0.8rem, transparent 0.85rem);
+}
+
+.event-ticket-icon {
+  display: inline-flex;
+  height: 2.75rem;
+  width: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(216, 188, 130, 0.55);
+  background: rgba(216, 188, 130, 0.1);
+  color: #f3dfa8;
+}
+
+.event-ticket-title {
+  margin-top: 0.75rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #f7e7ce;
+}
+
+.event-ticket-time {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.event-ticket-time > .event-ticket-foil {
+  font-size: clamp(2.5rem, 10vw, 3.25rem);
+  padding-bottom: 0.05em;
+}
+
+.event-ticket-meridiem {
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  color: #d8bc82;
+}
+
+.event-ticket-note {
+  margin-top: 0.6rem;
+  max-width: 19rem;
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: rgba(241, 227, 198, 0.75);
+}
+
+.event-ticket-venue-name {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: #f7e7ce;
+}
+
+.event-ticket-venue-address {
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  color: rgba(241, 227, 198, 0.75);
+}
+
+.event-ticket-directions {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3a2a0a;
+  background: linear-gradient(135deg, #f3dfa8, #c9a961);
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.event-ticket-directions:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+@media (max-width: 360px) {
+  .event-ticket-date {
+    gap: 0.6rem;
+  }
+
+  .event-ticket-date-side {
+    letter-spacing: 0.16em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .event-ticket,
+  .event-ticket-directions {
+    transition: none;
+  }
+
+  .event-ticket-shine,
+  .event-ticket-foil {
+    animation: none;
+  }
+}
+
+/* ── Gift registry ── */
+.gift-panel {
+  position: relative;
+  width: 100%;
+  border-radius: 1.75rem;
+  padding: clamp(1.75rem, 5vw, 2.5rem) clamp(1.25rem, 4vw, 2.5rem);
+  background:
+    radial-gradient(90% 60% at 50% 0%, rgba(216, 188, 130, 0.18), transparent 70%),
+    #fffdf8;
+  border: 1px solid rgba(216, 188, 130, 0.55);
+  box-shadow:
+    0 30px 60px -35px rgba(4, 86, 63, 0.35),
+    inset 0 0 0 6px #fffdf8,
+    inset 0 0 0 7px rgba(216, 188, 130, 0.35);
+}
+
+.gift-panel-intro {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2rem);
+  text-align: center;
+}
+
+.gift-panel-verse {
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(201, 169, 97, 0.35);
+}
+
+@media (min-width: 900px) {
+  .gift-panel-intro {
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+    gap: 2.5rem;
+    text-align: left;
+  }
+
+  .gift-panel-intro .gift-panel-divider {
+    margin-left: 0;
+  }
+
+  .gift-panel-verse {
+    padding: 0.25rem 0 0.25rem 1.75rem;
+    border-top: 0;
+    border-left: 1px solid rgba(201, 169, 97, 0.45);
+  }
+}
+
+.gift-panel-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0.9rem auto 1.25rem;
+  max-width: 14rem;
+  color: var(--pink);
+}
+
+.gift-panel-divider::before,
+.gift-panel-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c9a961);
+}
+
+.gift-panel-divider::after {
+  background: linear-gradient(90deg, #c9a961, transparent);
+}
+
+.gift-cards {
+  display: grid;
+  gap: clamp(1.25rem, 4vw, 1.75rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  perspective: 1200px;
+}
+
+.gift-card {
+  --card-ink: #f7e7ce;
+  --card-soft: rgba(247, 231, 206, 0.72);
+  --card-line: rgba(247, 231, 206, 0.35);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: clamp(1.1rem, 4vw, 1.4rem) clamp(1.1rem, 4vw, 1.6rem);
+  border-radius: 1.25rem;
+  color: var(--card-ink);
+  box-shadow:
+    0 24px 40px -22px rgba(2, 30, 22, 0.7),
+    0 8px 16px -10px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.gift-card--emerald {
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(216, 188, 130, 0.28), transparent 55%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 9px),
+    linear-gradient(145deg, #078160 0%, #04563f 50%, #022e22 100%);
+}
+
+.gift-card--gold {
+  --card-ink: #2a1f08;
+  --card-soft: rgba(42, 31, 8, 0.68);
+  --card-line: rgba(42, 31, 8, 0.25);
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(255, 255, 255, 0.55), transparent 55%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 9px),
+    linear-gradient(145deg, #f3dfa8 0%, #d8bc82 45%, #b8913f 100%);
+}
+
+@media (hover: hover) {
+  .gift-card:nth-child(odd):hover {
+    transform: rotateY(6deg) rotateX(3deg) translateY(-6px);
+  }
+
+  .gift-card:nth-child(even):hover {
+    transform: rotateY(-6deg) rotateX(3deg) translateY(-6px);
+  }
+
+  .gift-card:hover {
+    box-shadow:
+      0 36px 50px -24px rgba(2, 30, 22, 0.75),
+      0 12px 22px -12px rgba(0, 0, 0, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
+.gift-card-shine {
+  position: absolute;
+  inset: -60% -30%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.16) 49%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(255, 255, 255, 0.16) 51%,
+    transparent 58%
+  );
+  animation: event-ticket-sweep 7s ease-in-out infinite;
+}
+
+.gift-card:nth-child(even) .gift-card-shine {
+  animation-delay: -3.5s;
+}
+
+.gift-card-monogram {
+  position: absolute;
+  right: -0.08em;
+  bottom: -0.32em;
+  z-index: -1;
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-size: clamp(8rem, 30vw, 11rem);
+  line-height: 1;
+  color: var(--card-ink);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.gift-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.gift-card-eyebrow {
+  font-size: 0.66rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--card-soft);
+}
+
+.gift-card-bank {
+  margin-top: 0.15rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.05rem, 4vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.gift-card-contactless {
+  width: 1.6rem;
+  height: 1.6rem;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.gift-card-chip {
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.0625rem;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+}
+
+.gift-card-number {
+  font-family: var(--font-serif), Georgia, serif;
+  margin-top: auto;
+  font-size: clamp(1.25rem, 5.4vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums lining-nums;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
+}
+
+.gift-card--gold .gift-card-number {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.gift-card-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2a1f08;
+  background: linear-gradient(135deg, #fff4dc, #d8bc82);
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.gift-card--gold .gift-card-copy {
+  color: #f7e7ce;
+  background: linear-gradient(135deg, #067a59, #023527);
+}
+
+.gift-card-copy:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.gift-card-copy:active {
+  transform: scale(0.96);
+}
+
+.gift-card-copy:focus-visible {
+  outline: 2px solid var(--card-ink);
+  outline-offset: 2px;
+}
+
+.gift-card-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.gift-card-field--number {
+  margin-top: auto;
+}
+
+.gift-card-field--number .gift-card-number {
+  margin-top: 0;
+}
+
+.gift-card-field-copy {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 9999px;
+  color: var(--card-ink);
+  border: 1px solid var(--card-line);
+  background: color-mix(in srgb, var(--card-ink) 10%, transparent);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.gift-card-field-copy:hover {
+  background: color-mix(in srgb, var(--card-ink) 20%, transparent);
+}
+
+.gift-card-field-copy:active {
+  transform: scale(0.92);
+}
+
+.gift-card-field-copy:focus-visible {
+  outline: 2px solid var(--card-ink);
+  outline-offset: 2px;
+}
+
+.gift-card-holder {
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--card-line);
+}
+
+.gift-card-chip-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.gift-card-chip-row .gift-card-copy {
+  margin-left: auto;
+}
+
+.gift-card-name {
+  margin-top: 0.15rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(0.9rem, 3.6vw, 1.05rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gift-card,
+  .gift-card-copy {
+    transition: none;
+  }
+
+  .gift-card-shine {
+    animation: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .gift-card-contactless {
+    display: none;
+  }
+
+  .gift-card-copy {
+    padding: 0.4rem 0.65rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* ── Countdown panel ── */
+.countdown-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 48rem;
+  padding: clamp(2.25rem, 7vw, 3.5rem) clamp(1.25rem, 5vw, 3rem);
+  border-radius: 1.75rem;
+  border: 1px solid rgba(216, 188, 130, 0.55);
+  background:
+    radial-gradient(100% 70% at 50% 0%, rgba(216, 188, 130, 0.2) 0%, transparent 60%),
+    radial-gradient(90% 60% at 50% 115%, rgba(0, 0, 0, 0.4) 0%, transparent 70%),
+    linear-gradient(160deg, #067a59 0%, #04563f 45%, #023527 100%);
+  color: #f1e3c6;
+  text-align: center;
+  box-shadow:
+    0 30px 60px -28px rgba(2, 53, 39, 0.65),
+    0 12px 24px -12px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 6px #04563f,
+    inset 0 0 0 7px rgba(216, 188, 130, 0.35);
+}
+
+.countdown-panel-glow {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  z-index: -1;
+  width: 120%;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  translate: -50% -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(216, 188, 130, 0.12) 40deg,
+    transparent 90deg,
+    transparent 180deg,
+    rgba(216, 188, 130, 0.1) 220deg,
+    transparent 270deg
+  );
+  animation: countdown-glow-spin 18s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes countdown-glow-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.countdown-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(241, 227, 198, 0.8);
+}
+
+.countdown-title {
+  margin-top: 0.6rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
+  line-height: 1.2;
+  color: #f7e7ce;
+}
+
+.countdown-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 12rem;
+  margin: 1rem 0 clamp(1.75rem, 5vw, 2.25rem);
+  font-size: 0.8rem;
+  color: #d8bc82;
+}
+
+.countdown-divider::before,
+.countdown-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d8bc82);
+}
+
+.countdown-divider::after {
+  background: linear-gradient(90deg, #d8bc82, transparent);
+}
+
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.5rem, 3vw, 2rem);
+  width: 100%;
+  max-width: 36rem;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.countdown-ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-width: 7.5rem;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.05) 62%, transparent 63%);
+}
+
+.countdown-ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  rotate: -90deg;
+  overflow: visible;
+}
+
+.countdown-ring-track {
+  fill: none;
+  stroke: rgba(216, 188, 130, 0.18);
+  stroke-width: 3;
+}
+
+.countdown-ring-progress {
+  fill: none;
+  stroke: #e6cc8f;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px rgba(243, 223, 168, 0.55));
+  transition: stroke-dashoffset 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.countdown-value {
+  position: relative;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.35rem, 6.5vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums lining-nums;
+  background: linear-gradient(180deg, #fff4dc 0%, #e6cc8f 55%, #c9a961 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: countdown-tick 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes countdown-tick {
+  from {
+    opacity: 0.2;
+    translate: 0 -30%;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.countdown-label {
+  font-size: clamp(0.58rem, 2.4vw, 0.75rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(241, 227, 198, 0.75);
+}
+
+.countdown-date {
+  margin-top: clamp(1.75rem, 5vw, 2.25rem);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(0.85rem, 3.2vw, 1rem);
+  font-style: italic;
+  color: rgba(241, 227, 198, 0.85);
+}
+
+.countdown-calendar-button {
+  margin-top: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.8rem 1.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #2a1f08;
+  background: linear-gradient(135deg, #fff4dc 0%, #e6cc8f 45%, #c9a961 100%);
+  box-shadow:
+    0 10px 24px -10px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.countdown-calendar-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow:
+    0 14px 28px -10px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.countdown-calendar-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.countdown-calendar-button:focus-visible {
+  outline: 2px solid #f7e7ce;
+  outline-offset: 3px;
+}
+
+@media (max-width: 380px) {
+  .countdown-ring-track,
+  .countdown-ring-progress {
+    stroke-width: 4;
+  }
+
+  .countdown-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+  }
+
+  .countdown-calendar-button {
+    padding-inline: 1.25rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown-panel-glow,
+  .countdown-value {
+    animation: none;
+  }
+
+  .countdown-ring-progress,
+  .countdown-calendar-button {
+    transition: none;
+  }
+}
+
+/* ── Verse cards (Psalm 118:24) ── */
+.verse-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 3vw, 1.25rem);
+}
+
+@media (min-width: 768px) {
+  .verse-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: center;
+  }
+
+  .verse-card-slot:nth-child(even) {
+    margin-top: 2.5rem;
+  }
+}
+
+.verse-card-slot {
+  display: flex;
+}
+
+.verse-card {
+  --verse-ink: #f7e7ce;
+  --verse-soft: rgba(247, 231, 206, 0.7);
+  --verse-key: #e6cc8f;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(10.5rem, 42vw, 14rem);
+  padding: 2rem 0.9rem 1.6rem;
+  border-radius: 999px 999px 1.25rem 1.25rem;
+  border: 1px solid rgba(216, 188, 130, 0.55);
+  text-align: center;
+  color: var(--verse-ink);
+  box-shadow:
+    0 22px 40px -24px rgba(2, 53, 39, 0.55),
+    0 8px 16px -10px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 5px var(--verse-frame, #04563f),
+    inset 0 0 0 6px rgba(216, 188, 130, 0.4);
+  animation: verse-float 6s ease-in-out infinite;
+  transition: box-shadow 0.4s ease;
+}
+
+.verse-card::before {
+  content: "";
+  position: absolute;
+  inset: -40% -60%;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.16) 50%, transparent 58%);
+  animation: event-ticket-sweep 7s ease-in-out infinite;
+  animation-delay: inherit;
+  pointer-events: none;
+}
+
+.verse-card--emerald {
+  --verse-frame: #04563f;
+  background:
+    radial-gradient(100% 70% at 50% 0%, rgba(216, 188, 130, 0.22), transparent 65%),
+    linear-gradient(165deg, #067a59 0%, #04563f 50%, #023527 100%);
+}
+
+.verse-card--cream {
+  --verse-ink: #1f3d2f;
+  --verse-soft: rgba(31, 61, 47, 0.65);
+  --verse-key: #046c4e;
+  --verse-frame: #fffaf0;
+  background:
+    radial-gradient(100% 70% at 50% 0%, rgba(216, 188, 130, 0.25), transparent 65%),
+    #fffaf0;
+}
+
+.verse-card--gold {
+  --verse-ink: #2a1f08;
+  --verse-soft: rgba(42, 31, 8, 0.65);
+  --verse-key: #04563f;
+  --verse-frame: #dcc187;
+  background:
+    radial-gradient(100% 70% at 50% 0%, rgba(255, 255, 255, 0.5), transparent 65%),
+    linear-gradient(165deg, #f3dfa8 0%, #d8bc82 50%, #b8913f 100%);
+}
+
+@keyframes verse-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+.verse-card-numeral {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--verse-soft);
+}
+
+.verse-card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  margin: 0.75rem 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(0.95rem, 3.6vw, 1.1rem);
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--verse-soft);
+}
+
+.verse-card-key {
+  font-size: clamp(1.9rem, 8vw, 2.6rem);
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.1;
+  color: var(--verse-key);
+}
+
+.verse-card--emerald .verse-card-key {
+  background: linear-gradient(110deg, #c9a961 0%, #fff4dc 45%, #d8bc82 70%, #f3dfa8 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: event-ticket-foil 5s linear infinite;
+}
+
+.verse-card-flourish {
+  font-size: 0.75rem;
+  color: #d8bc82;
+}
+
+.verse-card--gold .verse-card-flourish {
+  color: #04563f;
+}
+
+.verse-cite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: clamp(2rem, 6vw, 3.5rem);
+}
+
+.verse-cite cite {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(0.85rem, 3vw, 1rem);
+  font-style: normal;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+
+.verse-cite-line {
+  width: clamp(2.5rem, 12vw, 5rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c9a961);
+}
+
+.verse-cite-line:last-child {
+  background: linear-gradient(90deg, #c9a961, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .verse-card,
+  .verse-card::before,
+  .verse-card--emerald .verse-card-key {
+    animation: none;
+  }
+}
+
+/* ── Blessing quote cards ── */
+.blessing-cards {
+  display: grid;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 60rem;
+  margin-top: 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .blessing-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem;
+  }
+}
+
+.blessing-card {
+  --blessing-ink: #f7e7ce;
+  --blessing-soft: rgba(247, 231, 206, 0.75);
+  --blessing-mark: rgba(216, 188, 130, 0.35);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem clamp(1.5rem, 5vw, 2.5rem) clamp(1.75rem, 5vw, 2.25rem);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(216, 188, 130, 0.55);
+  text-align: center;
+  color: var(--blessing-ink);
+  box-shadow:
+    0 24px 44px -26px rgba(2, 53, 39, 0.55),
+    0 8px 18px -10px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 5px var(--blessing-frame),
+    inset 0 0 0 6px rgba(216, 188, 130, 0.4);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .blessing-card:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.blessing-card::before {
+  content: "";
+  position: absolute;
+  inset: -50% -40%;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.14) 50%, transparent 58%);
+  animation: event-ticket-sweep 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.blessing-card--emerald {
+  --blessing-frame: #04563f;
+  background:
+    radial-gradient(100% 70% at 50% 0%, rgba(216, 188, 130, 0.2), transparent 65%),
+    linear-gradient(160deg, #067a59 0%, #04563f 50%, #023527 100%);
+}
+
+.blessing-card--gold {
+  --blessing-ink: #2a1f08;
+  --blessing-soft: rgba(42, 31, 8, 0.7);
+  --blessing-mark: rgba(4, 86, 63, 0.25);
+  --blessing-frame: #dcc187;
+  background:
+    radial-gradient(100% 70% at 50% 0%, rgba(255, 255, 255, 0.5), transparent 65%),
+    linear-gradient(160deg, #f3dfa8 0%, #d8bc82 50%, #b8913f 100%);
+}
+
+.blessing-card--gold::before {
+  animation-delay: -4s;
+}
+
+.blessing-card-mark {
+  position: absolute;
+  top: -0.15em;
+  left: 50%;
+  translate: -50% 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 6rem;
+  line-height: 1;
+  color: var(--blessing-mark);
+  pointer-events: none;
+}
+
+.blessing-card-text {
+  position: relative;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.15rem, 4.2vw, 1.4rem);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.blessing-card-cite {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  font-style: normal;
+  letter-spacing: 0.2em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: var(--blessing-soft);
+}
+
+.blessing-card-cite::before,
+.blessing-card-cite::after {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blessing-card {
+    transition: none;
+  }
+
+  .blessing-card::before {
+    animation: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .blessing-card-cite {
+    letter-spacing: 0.14em;
+  }
+
+  .blessing-card-cite::before,
+  .blessing-card-cite::after {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .blessing-cards {
+    gap: 0.9rem;
+    margin-top: 2.5rem;
+  }
+
+  .blessing-card {
+    padding: 2.1rem 1.25rem 1.15rem;
+    border-radius: 1.25rem;
+  }
+
+  .blessing-card-mark {
+    top: -0.05em;
+    font-size: 3.5rem;
+  }
+
+  .blessing-card-text {
+    font-size: 1.02rem;
+    line-height: 1.5;
+  }
+
+  .blessing-card-cite {
+    margin-top: 0.6rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .blessing-cards {
+    gap: 0.9rem;
+    margin-top: 2.5rem;
+  }
+
+  .blessing-card {
+    padding: 2.1rem 1.25rem 1.15rem;
+    border-radius: 1.25rem;
+  }
+
+  .blessing-card-mark {
+    top: -0.05em;
+    font-size: 3.5rem;
+  }
+
+  .blessing-card-text {
+    font-size: 1.02rem;
+    line-height: 1.5;
+  }
+
+  .blessing-card-cite {
+    margin-top: 0.6rem;
+    font-size: 0.7rem;
   }
 }

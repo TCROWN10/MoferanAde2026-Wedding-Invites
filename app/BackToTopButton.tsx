@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const BACK_TO_TOP_IMAGE = "/DAV_9054-Edit.jpeg";
+const BACK_TO_TOP_IMAGE = "/IMG_7010.jpeg";
 
 export default function BackToTopButton() {
   const [visible, setVisible] = useState(false);

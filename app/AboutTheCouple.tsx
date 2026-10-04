@@ -150,11 +150,11 @@ export default function AboutTheCouple() {
   return (
     <section
       id="about-the-couple"
-      className={`relative z-10 scroll-mt-24 bg-background py-12 md:py-16 ${body.className}`}
+      className={`relative z-10 scroll-mt-24 overflow-x-clip bg-background py-12 md:py-16 ${body.className}`}
     >
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <h2
-          className={`${script.className} text-center text-[2.45rem] leading-none text-[#800000] sm:text-[2.8rem] md:text-[3.1rem]`}
+          className={`${script.className} text-center text-[2.45rem] leading-none text-[#046c4e] sm:text-[2.8rem] md:text-[3.1rem]`}
         >
           About the Couple
         </h2>
@@ -164,34 +164,18 @@ export default function AboutTheCouple() {
         <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2 md:items-start md:gap-10 lg:gap-12">
           <div className="self-start">
             <RevealOnScroll from="left">
-              <AboutImage src={GROOM_IMAGE} alt="Thomson ORIAKHI" />
+              <AboutImage src={GROOM_IMAGE} alt="Emmanuel Segun Ademola" objectPosition="42% 30%" />
             </RevealOnScroll>
           </div>
           <div className="min-w-0 self-start text-left">
             <RevealOnScroll from="right">
               <h3
-                className={`${script.className} mb-1 text-[2rem] font-bold leading-tight text-[#800000] sm:text-[2.3rem] md:text-[2.6rem]`}
+                className={`${script.className} mb-1 text-[2rem] font-bold leading-tight text-[#046c4e] [word-spacing:0.18em] sm:text-[2.3rem] md:text-[2.6rem]`}
               >
-                Thomson ORIAKHI
+                Emmanuel Segun Ademola
               </h3>
-              <p className="mb-0 text-base font-bold leading-tight text-foreground">
-                To my forever,
-              </p>
               <div className={`${letter.className} mt-1 space-y-3 text-[0.84rem] leading-snug text-foreground`}>
-                <p>
-                  Today I thank God for the blessing of having you in my life. You&apos;ve brought
-                  happiness, wealth, strength and courage into my world. I&apos;m honored to become
-                  your husband. When I see you I see my half — how can I live without my half? You in
-                  my life brings completeness.
-                </p>
-                <p>
-                  I promise to love you forever through every season of life. I promise to respect
-                  you and support you until you fully become the woman you&apos;ve always desired to
-                  become. I bless God for this wonderful union.
-                </p>
-                <p className="font-medium text-foreground">
-                  Ecclesiastes 4:9, 12 — I love you forever, to my forever. ❤️
-                </p>
+                <p className="italic text-text-muted">A note from the groom is coming soon. ❤️</p>
               </div>
             </RevealOnScroll>
           </div>
@@ -202,33 +186,12 @@ export default function AboutTheCouple() {
           <div className="order-2 min-w-0 self-start text-left md:order-1">
             <RevealOnScroll from="left">
               <h3
-                className={`${script.className} mb-1 text-[2rem] font-bold leading-tight text-[#800000] sm:text-[2.3rem] md:text-[2.6rem]`}
+                className={`${script.className} mb-1 text-[2rem] font-bold leading-tight text-[#046c4e] [word-spacing:0.18em] sm:text-[2.3rem] md:text-[2.6rem]`}
               >
-                Gbadamosi Motunrayo
+                Soje Anuoluwapo Feranmi
               </h3>
-              <p className="mb-0 text-base font-bold leading-tight text-foreground">
-                My love 😍 oko mi,
-              </p>
               <div className={`${letter.className} mt-1 space-y-3 text-[0.84rem] leading-snug text-foreground`}>
-                <p>
-                  Loving you has been the most beautiful part of my life. You have filled my days
-                  with peace, joy, and a happiness I never knew I needed. With you, I have found not
-                  only love but also my best friend, my safe place, and my greatest blessing.
-                </p>
-                <p>
-                  Choosing you is the easiest decision I have ever made, and I would choose you
-                  again and again without hesitation. You make me feel cherished, understood, and
-                  deeply loved.
-                </p>
-                <p>
-                  As we look forward to forever, I promise to love you faithfully, stand by your
-                  side through every season, and cherish every moment we share. My love for you grows
-                  stronger every day, and I cannot wait to spend a lifetime making beautiful
-                  memories with you.
-                </p>
-                <p className="font-medium text-foreground">
-                  You are my forever, my always, and the love of my life. ❤️✨
-                </p>
+                <p className="italic text-text-muted">A note from the bride is coming soon. ❤️</p>
               </div>
             </RevealOnScroll>
           </div>
@@ -236,8 +199,8 @@ export default function AboutTheCouple() {
             <RevealOnScroll from="right">
               <AboutImage
                 src={BRIDE_IMAGE}
-                alt="Gbadamosi Motunrayo"
-                objectPosition="32% 18%"
+                alt="Soje Anuoluwapo Feranmi"
+                objectPosition="52% 20%"
               />
             </RevealOnScroll>
           </div>

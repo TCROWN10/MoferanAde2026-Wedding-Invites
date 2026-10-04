@@ -11,7 +11,7 @@ import {
   type ReactNode,
 } from "react";
 
-export const WEDDING_AUDIO_SRC = "/Tjan_-_Your_Smile_47vibez.net.mp3";
+export const WEDDING_AUDIO_SRC = "/Moses_Bliss_-_For_Life_CeeNaija.com_.mp3";
 
 /** Set from the landing page CTA so playback can start on `/celebration` (same user gesture chain). */
 export const WEDDING_PLAY_AFTER_NAV_KEY = "weddingPlayAfterNav";
@@ -33,7 +33,7 @@ export function useWeddingAudio() {
   return ctx;
 }
 
-/** Shared audio for `/celebration` only — stays paused until Open Invitation is clicked. */
+/** Shared audio for `/celebration` only — stays silent until the envelope seal is opened. */
 export function WeddingAudioProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -41,9 +41,14 @@ export function WeddingAudioProvider({ children }: { children: ReactNode }) {
   const [musicEnabled, setMusicEnabled] = useState(false);
   const isLanding = pathname === "/";
 
+  const startedRef = useRef(false);
+
+  /** Must be called from a user gesture (the envelope seal opening) so mobile browsers allow sound. */
   const tryPlay = useCallback(() => {
     const el = audioRef.current;
     if (!el) return Promise.resolve();
+    startedRef.current = true;
+    setMusicEnabled(true);
     el.loop = true;
     return el.play().then(
       () => setNeedsUserPlay(false),
@@ -75,73 +80,26 @@ export function WeddingAudioProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const el = audioRef.current;
-    if (!el) return;
+    if (!el || !isLanding) return;
+    el.pause();
+    startedRef.current = false;
+  }, [isLanding]);
 
-    if (isLanding) {
-      el.pause();
-      setMusicEnabled(false);
-      setNeedsUserPlay(false);
-      return;
-    }
-
-    let unlocked = false;
-    try {
-      unlocked = sessionStorage.getItem(WEDDING_PLAY_AFTER_NAV_KEY) === "1";
-      if (unlocked) {
-        sessionStorage.removeItem(WEDDING_PLAY_AFTER_NAV_KEY);
-      }
-    } catch {
-      /* storage blocked */
-    }
-
-    if (!unlocked) {
-      el.pause();
-      setMusicEnabled(false);
-      setNeedsUserPlay(false);
-      return;
-    }
-
-    setMusicEnabled(true);
-
-    const attempt = () =>
-      tryPlay().catch(() => {
-        setNeedsUserPlay(true);
-      });
-
-    attempt();
-    const t1 = setTimeout(attempt, 150);
-    const t2 = setTimeout(attempt, 600);
-
-    const unlock = () => {
-      attempt();
-      document.removeEventListener("pointerdown", unlock);
-      document.removeEventListener("touchstart", unlock);
-      document.removeEventListener("click", unlock);
-      document.removeEventListener("keydown", unlock);
-    };
-
-    document.addEventListener("pointerdown", unlock, { passive: true });
-    document.addEventListener("touchstart", unlock, { passive: true });
-    document.addEventListener("click", unlock);
-    document.addEventListener("keydown", unlock);
-
+  useEffect(() => {
     const onVis = () => {
-      if (!document.hidden) attempt();
+      const el = audioRef.current;
+      if (!el || !startedRef.current || document.hidden) return;
+      el.play().catch(() => setNeedsUserPlay(true));
     };
     document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
 
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      document.removeEventListener("visibilitychange", onVis);
-      document.removeEventListener("pointerdown", unlock);
-      document.removeEventListener("touchstart", unlock);
-      document.removeEventListener("click", unlock);
-      document.removeEventListener("keydown", unlock);
-    };
-  }, [isLanding, tryPlay]);
-
-  const value: WeddingAudioContextValue = { tryPlay, needsUserPlay, musicEnabled };
+  const value: WeddingAudioContextValue = {
+    tryPlay,
+    needsUserPlay: needsUserPlay && !isLanding,
+    musicEnabled: musicEnabled && !isLanding,
+  };
 
   return (
     <WeddingAudioContext.Provider value={value}>

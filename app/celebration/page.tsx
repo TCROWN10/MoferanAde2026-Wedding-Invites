@@ -1,18 +1,22 @@
+"use client";
+
 import CountdownTimer from "../CountdownTimer";
 import AddToCalendar from "../AddToCalendar";
 import PhotoGallery from "../PhotoGallery";
-import CopyableField from "../CopyableField";
 import HeroSection from "../HeroSection";
 import FamilyInvitation from "../FamilyInvitation";
 import AboutTheCouple from "../AboutTheCouple";
 import ScrollReveal from "../ScrollReveal";
 import BackToTopButton from "../BackToTopButton";
-import HotelContacts from "../HotelContacts";
-import { type ReactNode } from "react";
+import EnvelopeOverlay from "@/src/components/EnvelopeOverlay";
+import { EventDateCard, EventStubCard, EventVenueCard } from "../EventTicket";
+import GiftCards from "../GiftCards";
+import VerseCards from "../VerseCards";
+import { useState, type ReactNode } from "react";
 
 /** Full address for Maps — `encodeURIComponent` avoids broken `?q=` links */
 const GOOGLE_MAPS_VENUE = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-  "Olubadan Hall Academy Suite, Old Ife Road, Ibadan, Oyo State, Nigeria"
+  "Bola Memorial Anglican Church Hall, 29 Mobolaji Bank-Anthony Way, Ikeja, Lagos, Nigeria"
 )}`;
 
 function HeartOutline({ className }: { className?: string }) {
@@ -23,63 +27,11 @@ function HeartOutline({ className }: { className?: string }) {
   );
 }
 
-function MapPinIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-      <circle cx="12" cy="9" r="2.5" />
-    </svg>
-  );
-}
-
-function PhoneIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
-    </svg>
-  );
-}
-
-function MailIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="M4 7l8 6 8-6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function WhatsAppIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M19.11 4.89A9.9 9.9 0 0012.07 2C6.57 2 2.1 6.47 2.1 11.97c0 1.75.46 3.46 1.33 4.98L2 22l5.2-1.36a9.92 9.92 0 004.87 1.24h.01c5.5 0 9.97-4.47 9.97-9.97a9.9 9.9 0 00-2.94-7.02zm-7.04 15.3h-.01a8.2 8.2 0 01-4.18-1.14l-.3-.18-3.09.81.83-3.01-.2-.31a8.24 8.24 0 01-1.28-4.38c0-4.54 3.69-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 012.4 5.82c0 4.54-3.69 8.23-8.23 8.23zm4.51-6.18c-.25-.12-1.48-.73-1.71-.82-.23-.08-.4-.12-.56.13-.17.24-.65.82-.8.98-.14.16-.29.18-.54.06-.25-.12-1.05-.38-2-1.21a7.5 7.5 0 01-1.39-1.73c-.15-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.24.25-.4.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.77-1.84-.2-.47-.4-.4-.56-.41h-.48c-.16 0-.43.06-.66.31-.23.24-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.16 1.72 2.63 4.17 3.69.58.25 1.03.4 1.38.51.58.18 1.1.16 1.51.1.46-.07 1.48-.6 1.69-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z" />
-    </svg>
-  );
-}
-
 function CalendarIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <rect x="3" y="4" width="18" height="18" rx="2" />
       <path d="M16 2v4M8 2v4M3 10h18" />
-    </svg>
-  );
-}
-
-function ClockIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 6v6l4 2" />
-    </svg>
-  );
-}
-
-function ChurchIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M12 2L4 7v2h2v10h4v-5h4v5h4V9h2V7l-8-5z" />
-      <path d="M12 8v2M10 12h4M12 10v4" />
     </svg>
   );
 }
@@ -174,8 +126,12 @@ function ColourCodeDivider({ className }: { className?: string }) {
 }
 
 export default function Home() {
+  const [overlayActive, setOverlayActive] = useState(true);
+
   return (
-    <div className="relative min-h-screen flex flex-col">
+    <>
+    {overlayActive && <EnvelopeOverlay onOpenComplete={() => setOverlayActive(false)} />}
+    <div className="relative min-h-screen flex flex-col" aria-hidden={overlayActive}>
       <HeroSection />
 
       <FamilyInvitation />
@@ -185,54 +141,13 @@ export default function Home() {
       {/* Events section */}
       <section
         id="events"
-        className="relative z-10 scroll-mt-24 py-16 md:py-24 px-6 flex flex-col items-center"
+        className="relative z-10 scroll-mt-24 py-12 md:py-16 lg:py-24 px-5 sm:px-6 flex flex-col items-center"
       >
         {/* Section header hearts */}
         <div className="flex items-center justify-center gap-2 mb-12" aria-hidden>
           <HeartOutline className="w-4 h-4 text-accent-green" />
           <HeartOutline className="w-4 h-4 text-pink" />
           <HeartOutline className="w-4 h-4 text-pink" />
-        </div>
-
-        {/* Event date cards */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-0 sm:gap-0 w-full max-w-2xl relative">
-          {/* Connecting line between cards (visible on larger screens) */}
-          <div
-            className="hidden sm:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-[280px] h-px bg-[#D4AF37]/35 z-0"
-            aria-hidden
-          />
-          <div className="w-full sm:w-1/2 flex justify-center sm:justify-end pr-0 sm:pr-4 relative z-10">
-            <ScrollReveal>
-              <div className="w-full max-w-[240px] rounded-2xl border border-[#E3EAF3] bg-white py-6 px-6 text-center shadow-sm">
-                <p className="text-pink text-sm font-light tracking-[0.2em] uppercase mb-2">
-                  Traditional Wedding
-                </p>
-                <p className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                  10th October
-                </p>
-                <p className="text-text-muted text-base font-light mt-1">2026 · 10:00 AM</p>
-              </div>
-            </ScrollReveal>
-          </div>
-          <div className="w-full sm:w-1/2 flex justify-center sm:justify-start pl-0 sm:pl-4 mt-6 sm:mt-0 relative z-10">
-            <ScrollReveal delayMs={80}>
-              <div className="w-full max-w-[240px] rounded-2xl border border-[#E3EAF3] bg-white py-6 px-6 text-center shadow-sm">
-                <p className="text-pink-light text-sm font-light tracking-[0.2em] uppercase mb-2">
-                  Reception
-                </p>
-                <p className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                  10th October
-                </p>
-                <p className="text-text-muted text-base font-light mt-1">2026 · 1:00 PM</p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-
-        {/* Location */}
-        <div className="flex items-center justify-center gap-2 mt-10 text-foreground">
-          <MapPinIcon className="w-5 h-5 text-pink shrink-0" />
-          <span className="text-lg font-light">Ibadan, Nigeria</span>
         </div>
 
         {/* Bible verse */}
@@ -250,7 +165,7 @@ export default function Home() {
       {/* Join Us On Our Special Days - Schedule */}
       <section
         id="our-story"
-        className="relative z-10 scroll-mt-24 py-16 md:py-24 px-6 flex flex-col items-center"
+        className="relative z-10 scroll-mt-24 py-12 md:py-16 lg:py-24 px-5 sm:px-6 flex flex-col items-center"
       >
         <p className="text-text-muted text-base font-light tracking-[0.2em] uppercase mb-3">
           Mark your calendar
@@ -265,103 +180,31 @@ export default function Home() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
-          {/* Top-left: Date card */}
-          <ScrollReveal>
-            <div className="rounded-2xl bg-[#F8FBFF] border border-[#E3EAF3] py-8 px-6 flex flex-col items-center justify-center text-center shadow-sm">
-              <p className="text-pink-light text-sm font-light tracking-[0.2em] uppercase mb-1">
-                Saturday
-              </p>
-              <p className="font-serif text-5xl md:text-6xl font-semibold text-foreground">10</p>
-              <p className="text-text-muted text-base font-light mt-1">October 2026</p>
-            </div>
+          <ScrollReveal className="h-full">
+            <EventDateCard />
           </ScrollReveal>
-          <ScrollReveal delayMs={70}>
-            <div className="rounded-2xl bg-white border border-[#E3EAF3] shadow-sm py-6 px-6 flex flex-col">
-              <ChurchIcon className="w-6 h-6 text-pink mb-3 shrink-0" />
-              <h3 className="font-serif text-foreground text-xl font-medium">
-                Traditional Wedding
-              </h3>
-              <p className="text-text-muted text-base font-light mt-1 leading-relaxed">
-                A celebration of our rich cultural heritage and traditions.
-              </p>
-              <div className="mt-4 flex items-center gap-2 text-text-muted text-base">
-                <ClockIcon className="w-4 h-4 shrink-0" />
-                <span>10:00 AM</span>
-              </div>
-              <div className="mt-2 flex items-start gap-2 text-base">
-                <MapPinIcon className="w-4 h-4 shrink-0 mt-0.5 text-foreground" />
-                <span>
-                  <span className="font-medium text-foreground">Olubadan Hall Academy Suite</span>
-                  <br />
-                  <span className="text-text-muted font-light">
-                    Old Ife Road, Ibadan
-                  </span>
-                </span>
-              </div>
-              <a
-                href={GOOGLE_MAPS_VENUE}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open Google Maps directions to Olubadan Hall Academy Suite, Ibadan"
-                className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg border-2 border-pink text-pink py-2.5 px-4 text-base font-light w-fit hover:bg-pink/10 transition-colors"
-              >
-                <MapPinIcon className="w-4 h-4" />
-                Get Directions
-              </a>
-            </div>
+          <ScrollReveal delayMs={70} className="h-full">
+            <EventStubCard event="traditional" />
           </ScrollReveal>
-          <ScrollReveal delayMs={120}>
-            <div className="rounded-2xl bg-white border border-[#E3EAF3] shadow-sm py-6 px-6 flex flex-col">
-              <HeartOutline className="w-6 h-6 text-pink-light mb-3 shrink-0" />
-              <h3 className="font-serif text-foreground text-xl font-medium">Reception</h3>
-              <p className="text-text-muted text-base font-light mt-1 leading-relaxed">
-                Join us for food, music, and joyful celebration as we begin our forever.
-              </p>
-              <div className="mt-4 flex items-center gap-2 text-text-muted text-base">
-                <ClockIcon className="w-4 h-4 shrink-0" />
-                <span>1:00 PM</span>
-              </div>
-              <div className="mt-2 flex items-start gap-2 text-base">
-                <MapPinIcon className="w-4 h-4 shrink-0 mt-0.5 text-foreground" />
-                <span>
-                  <span className="font-medium text-foreground">Olubadan Hall Academy Suite</span>
-                  <br />
-                  <span className="text-text-muted font-light">
-                    Old Ife Road, Ibadan
-                  </span>
-                </span>
-              </div>
-              <a
-                href={GOOGLE_MAPS_VENUE}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open Google Maps directions to Olubadan Hall Academy Suite, Ibadan"
-                className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg border-2 border-pink-light text-pink-light py-2.5 px-4 text-base font-light w-fit hover:bg-pink-light/10 transition-colors"
-              >
-                <MapPinIcon className="w-4 h-4" />
-                Get Directions
-              </a>
-            </div>
+          <ScrollReveal delayMs={120} className="h-full">
+            <EventStubCard event="reception" />
           </ScrollReveal>
-          <ScrollReveal delayMs={160}>
-            <div className="rounded-2xl bg-[#F8FBFF] border border-[#E3EAF3] py-8 px-6 flex flex-col items-center justify-center text-center shadow-sm">
-              <p className="text-pink text-sm font-light tracking-[0.2em] uppercase mb-1">
-                Saturday
-              </p>
-              <p className="font-serif text-5xl md:text-6xl font-semibold text-foreground">10</p>
-              <p className="text-text-muted text-base font-light mt-1">October 2026</p>
-            </div>
+          <ScrollReveal delayMs={160} className="h-full">
+            <EventVenueCard directionsHref={GOOGLE_MAPS_VENUE} />
           </ScrollReveal>
         </div>
       </section>
 
+      {/* Psalm 118:24 verse cards */}
+      <VerseCards />
+
       {/* What to Wear / Dress Code — colour code layout */}
       <section
         id="dress-code"
-        className="relative z-10 bg-background py-12 md:py-16 px-6 flex flex-col items-center"
+        className="relative z-10 bg-background py-10 md:py-14 px-5 sm:px-6 flex flex-col items-center"
       >
         <p className="font-serif text-3xl md:text-4xl text-foreground text-center font-semibold">
-        #TheOriakhiTakeover2026
+          #moFeranAde’26
         </p>
         <p className="text-text-muted text-base md:text-lg font-light text-center max-w-lg mt-2 mb-6">
           We&apos;d love for our guests to dress in our wedding colors to make the celebration even
@@ -376,35 +219,25 @@ export default function Home() {
             </h2>
 
             {/* Thin horizontal colour rules + labels (reference layout) */}
-            <div className="mt-5 grid grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <div className="mt-5 grid grid-cols-2 gap-4 sm:gap-6 md:gap-8">
               <div className="flex min-w-0 flex-col items-center">
                 <div
                   className="h-2 w-full rounded-[2px] sm:h-2.5"
-                  style={{ backgroundColor: "#5c6b3c" }}
+                  style={{ backgroundColor: "#046c4e" }}
                   aria-hidden
                 />
                 <span className="mt-2 text-center font-[system-ui,-apple-system,sans-serif] text-sm font-medium capitalize text-foreground">
-                  Olive green
+                  Emerald green
                 </span>
               </div>
               <div className="flex min-w-0 flex-col items-center">
                 <div
                   className="h-2 w-full rounded-[2px] sm:h-2.5"
-                  style={{ backgroundColor: "#f0c9a8" }}
+                  style={{ backgroundColor: "#d8bc82" }}
                   aria-hidden
                 />
                 <span className="mt-2 text-center font-[system-ui,-apple-system,sans-serif] text-sm font-medium capitalize text-foreground">
-                  Peach
-                </span>
-              </div>
-              <div className="flex min-w-0 flex-col items-center">
-                <div
-                  className="h-2 w-full rounded-[2px] border border-foreground/12 sm:h-2.5"
-                  style={{ backgroundColor: "#ffffff" }}
-                  aria-hidden
-                />
-                <span className="mt-2 text-center font-[system-ui,-apple-system,sans-serif] text-sm font-medium capitalize text-foreground">
-                  White
+                  Champagne gold
                 </span>
               </div>
             </div>
@@ -416,7 +249,7 @@ export default function Home() {
             </span>
           </div>
           <p className="text-foreground mt-4 text-center text-base font-light leading-relaxed">
-            Ladies: Elegant outfits in olive green and peach
+            Ladies: Elegant outfits in emerald green and champagne gold
             <br />
             <span className="mt-1.5 block">
               Gentlemen: Traditional attire in complementary colors
@@ -433,7 +266,7 @@ export default function Home() {
       {/* Photo Gallery */}
       <section
         id="gallery"
-        className="relative z-10 py-16 md:py-24 px-6 flex flex-col items-center"
+        className="relative z-10 py-12 md:py-16 lg:py-24 px-5 sm:px-6 flex flex-col items-center"
       >
         <p className="text-pink text-sm font-light tracking-[0.2em] uppercase mb-3">
           Our moments
@@ -446,7 +279,7 @@ export default function Home() {
           center={<CameraIcon className="h-6 w-6 text-pink shrink-0" />}
         />
         <p className="text-text-muted text-base font-light text-center max-w-lg mb-10">
-          A glimpse into our journey of love. Replace these with your own cherished memories.
+          A glimpse into our journey of love.
         </p>
         <div className="w-full max-w-7xl mx-auto px-0 sm:px-2">
           <PhotoGallery />
@@ -456,89 +289,47 @@ export default function Home() {
       {/* Gift Registry */}
       <section
         id="gifts"
-        className="relative z-10 py-16 md:py-24 px-6 flex flex-col items-center"
+        className="relative z-10 py-12 md:py-16 lg:py-24 px-5 sm:px-6 flex flex-col items-center"
       >
-        <p className="text-pink text-sm font-light tracking-[0.2em] uppercase mb-3">
+        <p className="text-pink text-center text-xs sm:text-sm font-light tracking-[0.2em] uppercase mb-3">
           Your presence is our present
         </p>
         <h2 className="font-serif text-3xl md:text-5xl text-foreground text-center font-semibold">
           Gift Registry
         </h2>
-        <GiftIcon className="w-8 h-8 text-pink mt-4 mb-10" aria-hidden />
+        <GiftIcon className="w-8 h-8 text-pink mt-4 mb-8" aria-hidden />
 
-        <ScrollReveal className="w-full max-w-2xl">
-          <div className="w-full rounded-2xl bg-white shadow-sm border border-[#E3EAF3] py-8 px-6 md:px-10">
-            <div className="flex justify-center mb-4">
-              <span className="text-pink text-2xl" aria-hidden>♥</span>
-            </div>
-            <h3 className="font-serif text-foreground text-2xl font-medium text-center mb-4">
-              Cash Gifts &amp; Well Wishes
-            </h3>
-            <p className="text-text-muted text-base font-light text-center leading-relaxed max-w-lg mx-auto mb-8">
-              Your presence at our wedding is the greatest gift of all. However, if you wish to bless
-              us, we gratefully welcome cash gifts or any item you would love to give us as we begin
-              this new chapter together.
-            </p>
-
-            <p className="text-foreground text-sm font-light tracking-[0.15em] uppercase text-center mb-4">
-              Account details
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div className="space-y-3">
-                <p className="text-pink text-sm font-light tracking-[0.2em] uppercase text-center mb-3">
-                  Motunrayo
+        <ScrollReveal className="w-full max-w-5xl">
+          <div className="gift-panel">
+            <div className="gift-panel-intro">
+              <div>
+                <h3 className="font-serif text-foreground text-2xl md:text-3xl font-medium">
+                  Cash Gifts &amp; Well Wishes
+                </h3>
+                <div className="gift-panel-divider" aria-hidden>
+                  <span>♥</span>
+                </div>
+                <p className="text-text-muted text-base md:text-lg font-light leading-relaxed">
+                  Your presence at our wedding is the greatest gift of all. However, if you wish to
+                  bless us, we gratefully welcome cash gifts or any item you would love to give us as
+                  we begin this new chapter together.
                 </p>
-                <div>
-                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Account Number</p>
-                  <CopyableField value="3235153428" />
-                </div>
-                <div>
-                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Bank Name</p>
-                  <CopyableField value="First Bank" />
-                </div>
-                <div>
-                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Account Name</p>
-                  <CopyableField value="Gbadamosi Motunrayo" />
-                </div>
               </div>
-              <div className="space-y-3">
-                <p className="text-pink text-sm font-light tracking-[0.2em] uppercase text-center mb-3">
-                  Thomson
+              <blockquote className="gift-panel-verse">
+                <p className="text-text-muted text-base font-serif italic leading-relaxed">
+                  &ldquo;Each of you should give what you have decided in your heart to give, not
+                  reluctantly or under compulsion, for God loves a cheerful giver.&rdquo;
                 </p>
-                <div>
-                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Account Number</p>
-                  <CopyableField value="1305605613" />
-                </div>
-                <div>
-                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Bank Name</p>
-                  <CopyableField value="Providus Bank" />
-                </div>
-                <div>
-                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Account Name</p>
-                  <CopyableField value="GW Fast Services" />
-                </div>
-              </div>
+                <cite className="not-italic block text-pink text-sm tracking-[0.2em] uppercase mt-3">
+                  2 Corinthians 9:7
+                </cite>
+              </blockquote>
             </div>
 
-            <blockquote className="text-center border-t border-[#D4AF37]/35 pt-6 space-y-6">
-              <div>
-                <p className="text-text-muted text-base font-serif italic leading-relaxed">
-                  &ldquo;This is the day that the LORD has made; we will rejoice and be glad in it.&rdquo;
-                </p>
-                <cite className="not-italic block text-text-muted text-base font-light mt-2">
-                  – Psalm 118:24
-                </cite>
-              </div>
-              <div>
-                <p className="text-text-muted text-base font-serif italic leading-relaxed">
-                  Each of you should give what you have decided in your heart to give, not
-                  reluctantly or under compulsion, for God loves a cheerful giver.
-                </p>
-                <cite className="not-italic block text-text-muted text-base font-light mt-2">
-                  – 2 Corinthians 9:7
-                </cite>
-              </div>
-            </blockquote>
+            <GiftCards />
+            <p className="text-text-muted text-sm font-light text-center mt-4">
+              Tap the copy icon beside any detail, or <span className="text-pink">Copy all</span> for everything at once.
+            </p>
           </div>
         </ScrollReveal>
       </section>
@@ -546,113 +337,66 @@ export default function Home() {
       {/* Countdown + RSVP section */}
       <section
         id="rsvp"
-        className="relative z-10 scroll-mt-24 py-16 md:py-24 px-6 flex flex-col items-center"
+        className="relative z-10 scroll-mt-24 py-12 md:py-16 lg:py-24 px-5 sm:px-6 flex flex-col items-center"
       >
-        {/* Counting down header */}
-        <p className="text-pink text-base font-light tracking-[0.25em] uppercase flex items-center justify-center gap-2 mb-3">
-          <span aria-hidden>♡</span>
-          <span>Counting down</span>
-          <span aria-hidden>♡</span>
-        </p>
-        <h2 className="font-serif text-3xl md:text-4xl text-foreground text-center mb-10">
-          Until We Say &ldquo;I Do&rdquo;
-        </h2>
+        <ScrollReveal className="flex w-full justify-center">
+          <div className="countdown-panel">
+            <div className="countdown-panel-glow" aria-hidden />
+            <p className="countdown-eyebrow">
+              <span aria-hidden>♡</span>
+              <span>Counting down</span>
+              <span aria-hidden>♡</span>
+            </p>
+            <h2 className="countdown-title">
+              Until We Say <span className="whitespace-nowrap">&ldquo;I Do&rdquo;</span>
+            </h2>
+            <div className="countdown-divider" aria-hidden>
+              <span>✦</span>
+            </div>
 
-        {/* Countdown timer */}
-        <CountdownTimer />
+            <CountdownTimer />
 
-        {/* Add to Calendar — downloads .ics (Apple, Google, Outlook, etc.) */}
-        <AddToCalendar />
+            <p className="countdown-date">Friday · 13 November 2026 · Ikeja, Lagos</p>
+
+            {/* Add to Calendar — downloads .ics (Apple, Google, Outlook, etc.) */}
+            <AddToCalendar />
+          </div>
+        </ScrollReveal>
 
         {/* RSVP */}
         <h3 className="font-serif text-foreground text-2xl md:text-3xl uppercase tracking-wide mt-16 mb-3">
           RSVP
         </h3>
         <p className="text-text-muted text-base font-light text-center max-w-md mb-8">
-          For seat reservations and RSVP, please contact:
+          RSVP contact details coming soon.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-xl">
-          <ScrollReveal className="w-full max-w-[260px]">
-            <div className="w-full rounded-2xl bg-white border border-[#E3EAF3] shadow-sm py-5 px-5 text-center">
-              <p className="font-serif text-foreground font-medium">Rebekah</p>
-              <a
-                href="tel:+2348126848271"
-                className="mt-2 inline-flex items-center justify-center gap-2 text-text-muted text-base font-light hover:text-foreground transition-colors"
-              >
-                <PhoneIcon className="w-4 h-4 shrink-0" />
-                +234 812 684 8271
-              </a>
-            </div>
+
+        {/* Quotes */}
+        <div className="blessing-cards">
+          <ScrollReveal className="flex">
+            <blockquote className="blessing-card blessing-card--emerald">
+              <span className="blessing-card-mark" aria-hidden>&ldquo;</span>
+              <p className="blessing-card-text">
+                Love is patient, love is kind. It does not envy, it does not boast, it is not proud.
+              </p>
+              <cite className="blessing-card-cite">1 Corinthians 13:4</cite>
+            </blockquote>
           </ScrollReveal>
-          <ScrollReveal className="w-full max-w-[260px]" delayMs={90}>
-            <div className="w-full rounded-2xl bg-white border border-[#E3EAF3] shadow-sm py-5 px-5 text-center">
-              <p className="font-serif text-foreground font-medium">Mayowa</p>
-              <a
-                href="tel:+2348127589403"
-                className="mt-2 inline-flex items-center justify-center gap-2 text-text-muted text-base font-light hover:text-foreground transition-colors"
-              >
-                <PhoneIcon className="w-4 h-4 shrink-0" />
-                +234 812 758 9403
-              </a>
-            </div>
+          <ScrollReveal delayMs={120} className="flex">
+            <blockquote className="blessing-card blessing-card--gold">
+              <span className="blessing-card-mark" aria-hidden>&ldquo;</span>
+              <p className="blessing-card-text">
+                The Lord bless thee, and keep thee: the Lord make his face shine upon thee, and be
+                gracious unto thee.
+              </p>
+              <cite className="blessing-card-cite">Numbers 6:24–25</cite>
+            </blockquote>
           </ScrollReveal>
         </div>
-
-        {/* Quote */}
-        <ScrollReveal className="mt-14 max-w-xl">
-          <blockquote className="text-center rounded-2xl bg-[#F8FBFF] border border-[#E3EAF3] shadow-sm py-8 px-6 md:px-8 space-y-6">
-            <div>
-              <p className="font-serif text-foreground text-xl md:text-2xl italic leading-relaxed">
-                &ldquo;Love is patient, love is kind. It does not envy, it does not boast, it is not
-                proud.&rdquo;
-              </p>
-              <cite className="not-italic block text-foreground text-base font-light mt-3">
-                — 1 Corinthians 13:4
-              </cite>
-            </div>
-            <div>
-              <p className="font-serif text-foreground text-xl md:text-2xl italic leading-relaxed">
-                &ldquo;The Lord bless thee, and keep thee: the Lord make his face shine upon thee,
-                and be gracious unto thee.&rdquo;
-              </p>
-              <cite className="not-italic block text-foreground text-base font-light mt-3">
-                — Numbers 6:24–25
-              </cite>
-            </div>
-          </blockquote>
-        </ScrollReveal>
-
-        <ScrollReveal className="mt-8 w-full max-w-4xl">
-          <HotelContacts />
-        </ScrollReveal>
       </section>
 
-      {/* Footer / Designer credit */}
-      <footer className="relative z-10 border-t border-[#D4AF37]/35 px-6 py-8 text-center">
-        <div className="mx-auto flex w-full max-w-xl flex-wrap items-center justify-center gap-x-3 gap-y-2">
-          <p className="text-text-muted text-sm font-medium uppercase tracking-[0.2em]">Designed by</p>
-          <p className="bg-linear-to-r from-[#2F5DAA] via-[#D4AF37] to-[#2F5DAA] bg-clip-text text-lg font-black tracking-[0.14em] text-transparent">
-            TCROWN
-          </p>
-          <a
-            href="mailto:tcrown6254@gmail.com"
-            aria-label="Email TCROWN"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E3EAF3] bg-white text-[#2F5DAA] shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#D4AF37]/60 hover:shadow-md"
-          >
-            <MailIcon className="h-4.5 w-4.5" />
-          </a>
-          <a
-            href="https://wa.me/2349163232188"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Chat with TCROWN on WhatsApp"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E3EAF3] bg-white text-[#2F5DAA] shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#D4AF37]/60 hover:shadow-md"
-          >
-            <WhatsAppIcon className="h-4.5 w-4.5" />
-          </a>
-        </div>
-      </footer>
       <BackToTopButton />
     </div>
+    </>
   );
 }

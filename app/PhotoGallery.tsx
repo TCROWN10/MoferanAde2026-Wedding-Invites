@@ -14,7 +14,9 @@ export type GalleryItem = { src: string; caption: string; key: string };
 
 export const GALLERY_ITEMS = GALLERY_SOURCE;
 
-const ITEMS_PER_VIEW = 8;
+const MAX_ITEMS_PER_VIEW = 8;
+/** Never repeat photos to fill the grid — show each photo once when there are only a few. */
+const ITEMS_PER_VIEW = Math.min(MAX_ITEMS_PER_VIEW, GALLERY_SOURCE.length);
 const ROTATE_INTERVAL_MS = 11000;
 const TRANSITION_DURATION_MS = 1400;
 /** In spotlight mode the grid stays 2×4; each tick shifts the window by one; every cell runs the roll animation. */
@@ -105,7 +107,7 @@ function GalleryImage({ src, caption }: { src: string; caption: string }) {
   }, [src, fileName]);
 
   return (
-    <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg border-2 border-foreground/10 bg-foreground/10 group">
+    <div className="relative w-full aspect-[4/3] sm:aspect-[3/4] overflow-hidden rounded-lg border-2 border-foreground/10 bg-foreground/10 group">
       {error ? (
         <div
           className="absolute inset-0 bg-pink-light/30 flex items-center justify-center p-3"
@@ -147,6 +149,13 @@ function GalleryImage({ src, caption }: { src: string; caption: string }) {
   );
 }
 
+const GRID_COLUMNS: Record<number, string> = {
+  1: "sm:grid-cols-1 max-w-md mx-auto",
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-3",
+  4: "sm:grid-cols-2 md:grid-cols-4",
+};
+
 function GalleryGrid({
   items,
   rollKey,
@@ -157,7 +166,7 @@ function GalleryGrid({
 }) {
   return (
     <ul
-      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4 list-none p-0 m-0 w-full h-full bg-transparent"
+      className={`grid grid-cols-1 ${GRID_COLUMNS[Math.min(items.length, 4)] ?? GRID_COLUMNS[4]} gap-2.5 sm:gap-3 md:gap-4 list-none p-0 m-0 w-full h-full bg-transparent`}
       role="list"
     >
       {items.map((item, idx) => (

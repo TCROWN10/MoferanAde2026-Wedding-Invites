@@ -1,11 +1,14 @@
-import type { Metadata } from "next";
-import InvitationLanding from "./InvitationLanding";
+import { redirect } from "next/navigation";
+// import type { Metadata } from "next";
+// import InvitationLanding from "./InvitationLanding";
 
-export const metadata: Metadata = {
-  title: "You're invited — #TheOriakhiTakeover2026",
-  description: "You are invited to the wedding of Gbadamosi Motunrayo & Thomson ORIAKHI.",
-};
+// export const metadata: Metadata = {
+//   title: "You're invited — #moFeranAde’26",
+//   description:
+//     "You are invited to the wedding of Soje Anuoluwapo Feranmi & Emmanuel Segun Ademola.",
+// };
 
 export default function Home() {
-  return <InvitationLanding />;
+  // return <InvitationLanding />;
+  redirect("/celebration");
 }
