@@ -174,8 +174,32 @@ export default function AboutTheCouple() {
               >
                 Emmanuel Segun Ademola
               </h3>
+              <p className="mb-0 text-base font-bold leading-tight text-foreground">
+                To MI Amour,
+              </p>
               <div className={`${letter.className} mt-1 space-y-3 text-[0.84rem] leading-snug text-foreground`}>
-                <p className="italic text-text-muted">A note from the groom is coming soon. ❤️</p>
+                <p>
+                  My heart is full of gratitude to God for bringing you into my life. The first day I
+                  saw you, I already knew you would be my wife. You have brought happiness, joy,
+                  strength and courage into my world.
+                </p>
+                <p>
+                  I promise to always love you, honor you, cherish you and respect you. I promise to
+                  put God at the center of our marriage and to always remember that our love is a gift
+                  from Him. I may not be perfect, but I promise to keep growing, keep learning, and
+                  keep loving you better.
+                </p>
+                <p>
+                  You are my answered prayer, my beautiful woman, and the person I want to grow old
+                  with.
+                </p>
+                <p>
+                  I choose you today. I will choose you tomorrow. And by God&apos;s grace, I will
+                  choose you for the rest of my life.
+                </p>
+                <p className="font-medium text-foreground">
+                  &ldquo;I have found the one whom my soul loves.&rdquo; — Song of Solomon 3:4
+                </p>
               </div>
             </RevealOnScroll>
           </div>

@@ -80,14 +80,14 @@ export function EventDateCard() {
 const EVENTS = {
   traditional: {
     label: "Traditional Wedding",
-    time: "10:00",
-    meridiem: "AM",
+    time: "12:00",
+    meridiem: "PM",
     note: "A celebration of our rich cultural heritage and traditions.",
     Icon: RingsIcon,
   },
   reception: {
     label: "Reception",
-    time: "1:00",
+    time: "2:00",
     meridiem: "PM",
     note: "Join us for food, music, and joyful celebration as we begin our forever.",
     Icon: GlassesIcon,

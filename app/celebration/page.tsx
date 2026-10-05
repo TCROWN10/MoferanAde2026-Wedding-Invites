@@ -48,6 +48,14 @@ function MapPinIcon({ className }: { className?: string }) {
   );
 }
 
+function PhoneIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+    </svg>
+  );
+}
+
 function ClockIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -196,7 +204,7 @@ export default function Home() {
                 <p className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                   13th November
                 </p>
-                <p className="text-text-muted text-base font-light mt-1">2026 · 10:00 AM</p>
+                <p className="text-text-muted text-base font-light mt-1">2026 · 12:00 PM</p>
               </div>
             </ScrollReveal>
           </div>
@@ -209,7 +217,7 @@ export default function Home() {
                 <p className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                   13th November
                 </p>
-                <p className="text-text-muted text-base font-light mt-1">2026 · 1:00 PM</p>
+                <p className="text-text-muted text-base font-light mt-1">2026 · 2:00 PM</p>
               </div>
             </ScrollReveal>
           </div>
@@ -272,7 +280,7 @@ export default function Home() {
               </p>
               <div className="mt-4 flex items-center gap-2 text-text-muted text-base">
                 <ClockIcon className="w-4 h-4 shrink-0" />
-                <span>10:00 AM</span>
+                <span>12:00 PM</span>
               </div>
               <div className="mt-2 flex items-start gap-2 text-base">
                 <MapPinIcon className="w-4 h-4 shrink-0 mt-0.5 text-foreground" />
@@ -305,7 +313,7 @@ export default function Home() {
               </p>
               <div className="mt-4 flex items-center gap-2 text-text-muted text-base">
                 <ClockIcon className="w-4 h-4 shrink-0" />
-                <span>1:00 PM</span>
+                <span>2:00 PM</span>
               </div>
               <div className="mt-2 flex items-start gap-2 text-base">
                 <MapPinIcon className="w-4 h-4 shrink-0 mt-0.5 text-foreground" />
@@ -614,8 +622,34 @@ export default function Home() {
           RSVP
         </h3>
         <p className="text-text-muted text-base font-light text-center max-w-md mb-8">
-          RSVP contact details coming soon.
+          For seat reservations and RSVP, please contact:
         </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-xl">
+          <ScrollReveal className="w-full max-w-[260px]">
+            <div className="w-full rounded-2xl bg-white border border-[#E3EAF3] shadow-sm py-5 px-5 text-center">
+              <p className="font-serif text-foreground font-medium">Isaiah</p>
+              <a
+                href="tel:+2347052934357"
+                className="mt-2 inline-flex items-center justify-center gap-2 text-text-muted text-base font-light hover:text-foreground transition-colors"
+              >
+                <PhoneIcon className="w-4 h-4 shrink-0" />
+                +234 705 293 4357
+              </a>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal className="w-full max-w-[260px]" delayMs={90}>
+            <div className="w-full rounded-2xl bg-white border border-[#E3EAF3] shadow-sm py-5 px-5 text-center">
+              <p className="font-serif text-foreground font-medium">Toyin</p>
+              <a
+                href="tel:+2348135494905"
+                className="mt-2 inline-flex items-center justify-center gap-2 text-text-muted text-base font-light hover:text-foreground transition-colors"
+              >
+                <PhoneIcon className="w-4 h-4 shrink-0" />
+                +234 813 549 4905
+              </a>
+            </div>
+          </ScrollReveal>
+        </div>
 
         {/* Quote */}
         <ScrollReveal className="mt-14 max-w-xl">

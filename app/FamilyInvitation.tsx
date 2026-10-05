@@ -20,10 +20,11 @@ export default function FamilyInvitation() {
         <blockquote
           className={`${playfair.className} text-foreground text-xl font-normal italic leading-relaxed md:text-2xl md:leading-relaxed lg:text-[1.65rem]`}
         >
-          Together with their families,{" "}
-          <span className="font-semibold not-italic">Soje Anuoluwapo Feranmi</span> and{" "}
-          <span className="font-semibold not-italic">Emmanuel Segun Ademola</span> joyfully invite you
-          to celebrate their wedding.
+          The families of{" "}
+          <span className="font-semibold not-italic">Pastor and Mrs. Raphael Bolanle Soje</span>
+          <br className="hidden md:block" /> and{" "}
+          <span className="font-semibold not-italic">Late PA and Mrs. Joseph Emmanuel Opatoyinbo</span>
+          <br className="hidden md:block" /> joyfully invite you to our children&apos;s wedding.
         </blockquote>
 
         <div className="mx-auto mt-10 flex w-full max-w-xs items-center justify-center gap-3" aria-hidden>

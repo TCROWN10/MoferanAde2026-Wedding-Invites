@@ -1,17 +1,29 @@
-type Hotel = { name: string; phone: string; tel: string };
+type Hotel = { name: string; area: string; phone?: string; tel?: string };
 
-/** Add hotels as `{ name: "Hotel name", phone: "08012345678", tel: "+2348012345678" }`. */
+/** Add a number as `phone: "08012345678", tel: "+2348012345678"` to show a tap-to-call link. */
 const HOTELS: Hotel[] = [
-  // { name: "Academy Suit", phone: "08176666602", tel: "+2348176666602" },
-  // { name: "Plams 77", phone: "08188422222", tel: "+2348188422222" },
-  // { name: "Carlton Gate", phone: "08126236287", tel: "+2348126236287" },
-  // { name: "Waterfield Hotel, Akobo", phone: "07033307129", tel: "+2347033307129" },
+  { name: "Watercress Hotels & Events", area: "Allen, Ikeja", phone: "09060003710", tel: "+2349060003710" },
+  { name: "Cozy Residenze Apart'hotel Ikeja", area: "Ikeja", phone: "07049228884", tel: "+2347049228884" },
+  { name: "Best Western Plus Ambience Hotel Ikeja", area: "Allen Avenue, Ikeja", phone: "09160006350", tel: "+2349160006350" },
+  { name: "Apartment Royale Hotel & Suite", area: "Allen, Ikeja", phone: "08100088800", tel: "+2348100088800" },
+  { name: "Joshesther Olive Hotels", area: "Opebi, Ikeja", phone: "09060004674", tel: "+2349060004674" },
 ];
+
+const HAS_PHONES = HOTELS.some((hotel) => hotel.phone && hotel.tel);
 
 function PhoneIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+    </svg>
+  );
+}
+
+function MapPinIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+      <circle cx="12" cy="9" r="2.5" />
     </svg>
   );
 }
@@ -34,25 +46,33 @@ export default function HotelContacts() {
         ) : (
           <div className="grid grid-cols-[1fr_auto] gap-x-6 border-b border-[#E3EAF3] bg-[#F8FBFF] px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-foreground md:px-6 md:text-sm">
             <span>Hotel name</span>
-            <span>Number</span>
+            {HAS_PHONES ? <span>Number</span> : null}
           </div>
         )}
         <ul className="divide-y divide-[#E3EAF3]">
           {HOTELS.map((hotel) => (
             <li
-              key={hotel.tel}
+              key={hotel.name}
               className="grid grid-cols-[1fr_auto] items-center gap-x-6 gap-y-1 px-5 py-4 md:px-6 md:py-4"
             >
-              <span className="text-base font-medium leading-snug text-foreground md:text-lg">
-                {hotel.name}
+              <span className="min-w-0">
+                <span className="block text-base font-medium leading-snug text-foreground md:text-lg">
+                  {hotel.name}
+                </span>
+                <span className="mt-0.5 inline-flex items-center gap-1.5 text-sm font-light text-text-muted md:text-base">
+                  <MapPinIcon className="h-3.5 w-3.5 shrink-0" />
+                  {hotel.area}
+                </span>
               </span>
-              <a
-                href={`tel:${hotel.tel}`}
-                className="inline-flex items-center gap-2 whitespace-nowrap text-base font-light text-text-muted transition-colors hover:text-foreground md:text-lg"
-              >
-                <PhoneIcon className="h-4 w-4 shrink-0" />
-                {hotel.phone}
-              </a>
+              {hotel.phone && hotel.tel ? (
+                <a
+                  href={`tel:${hotel.tel}`}
+                  className="inline-flex items-center gap-2 whitespace-nowrap text-base font-light text-text-muted transition-colors hover:text-foreground md:text-lg"
+                >
+                  <PhoneIcon className="h-4 w-4 shrink-0" />
+                  {hotel.phone}
+                </a>
+              ) : null}
             </li>
           ))}
         </ul>

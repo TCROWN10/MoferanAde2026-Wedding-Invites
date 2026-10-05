@@ -3,8 +3,8 @@
  * Countdown targets the traditional wedding start — same instant as DTSTART of first block below.
  */
 
-/** November 13, 2026, 10:00 WAT → 09:00 UTC */
-export const WEDDING_COUNTDOWN_UTC = new Date(Date.UTC(2026, 10, 13, 9, 0, 0));
+/** November 13, 2026, 12:00 WAT → 11:00 UTC */
+export const WEDDING_COUNTDOWN_UTC = new Date(Date.UTC(2026, 10, 13, 11, 0, 0));
 
 const VENUE =
   "Bola Memorial Anglican Church Hall, 29 Mobolaji Bank-Anthony Way, Ikeja, Lagos, Nigeria";
@@ -54,8 +54,8 @@ type CalendarEvent = {
 const EVENTS: CalendarEvent[] = [
   {
     uid: "traditional-wedding-feranmi-ademola-2026@moferanade26",
-    dtStartUtc: "20261113T090000Z",
-    dtEndUtc: "20261113T120000Z",
+    dtStartUtc: "20261113T110000Z",
+    dtEndUtc: "20261113T130000Z",
     summary: "Traditional Wedding — Feranmi & Ademola",
     location: VENUE,
     description:
@@ -63,8 +63,8 @@ const EVENTS: CalendarEvent[] = [
   },
   {
     uid: "reception-feranmi-ademola-2026@moferanade26",
-    dtStartUtc: "20261113T120000Z",
-    dtEndUtc: "20261113T160000Z",
+    dtStartUtc: "20261113T130000Z",
+    dtEndUtc: "20261113T170000Z",
     summary: "Reception — Feranmi & Ademola",
     location: VENUE,
     description: "Wedding reception and celebration. #moFeranAde’26.",
