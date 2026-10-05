@@ -8,11 +8,14 @@ import FamilyInvitation from "../FamilyInvitation";
 import AboutTheCouple from "../AboutTheCouple";
 import ScrollReveal from "../ScrollReveal";
 import BackToTopButton from "../BackToTopButton";
-import EnvelopeOverlay from "@/src/components/EnvelopeOverlay";
-import { EventDateCard, EventStubCard, EventVenueCard } from "../EventTicket";
-import GiftCards from "../GiftCards";
-import VerseCards from "../VerseCards";
-import { useState, type ReactNode } from "react";
+// import EnvelopeOverlay from "@/src/components/EnvelopeOverlay";
+// import { EventDateCard, EventStubCard, EventVenueCard } from "../EventTicket";
+// import GiftCards from "../GiftCards";
+import CopyableField from "../CopyableField";
+import HotelContacts from "../HotelContacts";
+// import VerseCards from "../VerseCards";
+import { type ReactNode } from "react";
+// import { useState, type ReactNode } from "react";
 
 /** Full address for Maps — `encodeURIComponent` avoids broken `?q=` links */
 const GOOGLE_MAPS_VENUE = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
@@ -32,6 +35,33 @@ function CalendarIcon({ className }: { className?: string }) {
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <rect x="3" y="4" width="18" height="18" rx="2" />
       <path d="M16 2v4M8 2v4M3 10h18" />
+    </svg>
+  );
+}
+
+function MapPinIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+      <circle cx="12" cy="9" r="2.5" />
+    </svg>
+  );
+}
+
+function ClockIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 6v6l4 2" />
+    </svg>
+  );
+}
+
+function ChurchIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M12 2L4 7v2h2v10h4v-5h4v5h4V9h2V7l-8-5z" />
+      <path d="M12 8v2M10 12h4M12 10v4" />
     </svg>
   );
 }
@@ -126,12 +156,12 @@ function ColourCodeDivider({ className }: { className?: string }) {
 }
 
 export default function Home() {
-  const [overlayActive, setOverlayActive] = useState(true);
+  // const [overlayActive, setOverlayActive] = useState(true);
 
   return (
     <>
-    {overlayActive && <EnvelopeOverlay onOpenComplete={() => setOverlayActive(false)} />}
-    <div className="relative min-h-screen flex flex-col" aria-hidden={overlayActive}>
+    {/* {overlayActive && <EnvelopeOverlay onOpenComplete={() => setOverlayActive(false)} />} */}
+    <div className="relative min-h-screen flex flex-col">
       <HeroSection />
 
       <FamilyInvitation />
@@ -148,6 +178,47 @@ export default function Home() {
           <HeartOutline className="w-4 h-4 text-accent-green" />
           <HeartOutline className="w-4 h-4 text-pink" />
           <HeartOutline className="w-4 h-4 text-pink" />
+        </div>
+
+        {/* Event date cards */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-0 sm:gap-0 w-full max-w-2xl relative">
+          {/* Connecting line between cards (visible on larger screens) */}
+          <div
+            className="hidden sm:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-[280px] h-px bg-[#D4AF37]/35 z-0"
+            aria-hidden
+          />
+          <div className="w-full sm:w-1/2 flex justify-center sm:justify-end pr-0 sm:pr-4 relative z-10">
+            <ScrollReveal>
+              <div className="w-full max-w-[240px] rounded-2xl border border-[#E3EAF3] bg-white py-6 px-6 text-center shadow-sm">
+                <p className="text-pink text-sm font-light tracking-[0.2em] uppercase mb-2">
+                  Traditional Wedding
+                </p>
+                <p className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
+                  13th November
+                </p>
+                <p className="text-text-muted text-base font-light mt-1">2026 · 10:00 AM</p>
+              </div>
+            </ScrollReveal>
+          </div>
+          <div className="w-full sm:w-1/2 flex justify-center sm:justify-start pl-0 sm:pl-4 mt-6 sm:mt-0 relative z-10">
+            <ScrollReveal delayMs={80}>
+              <div className="w-full max-w-[240px] rounded-2xl border border-[#E3EAF3] bg-white py-6 px-6 text-center shadow-sm">
+                <p className="text-pink-light text-sm font-light tracking-[0.2em] uppercase mb-2">
+                  Reception
+                </p>
+                <p className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
+                  13th November
+                </p>
+                <p className="text-text-muted text-base font-light mt-1">2026 · 1:00 PM</p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+
+        {/* Location */}
+        <div className="flex items-center justify-center gap-2 mt-10 text-foreground">
+          <MapPinIcon className="w-5 h-5 text-pink shrink-0" />
+          <span className="text-lg font-light">Ikeja, Lagos, Nigeria</span>
         </div>
 
         {/* Bible verse */}
@@ -180,6 +251,97 @@ export default function Home() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+          {/* Top-left: Date card */}
+          <ScrollReveal>
+            <div className="rounded-2xl bg-[#F8FBFF] border border-[#E3EAF3] py-8 px-6 flex flex-col items-center justify-center text-center shadow-sm">
+              <p className="text-pink-light text-sm font-light tracking-[0.2em] uppercase mb-1">
+                Friday
+              </p>
+              <p className="font-serif text-5xl md:text-6xl font-semibold text-foreground">13</p>
+              <p className="text-text-muted text-base font-light mt-1">November 2026</p>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delayMs={70}>
+            <div className="rounded-2xl bg-white border border-[#E3EAF3] shadow-sm py-6 px-6 flex flex-col">
+              <ChurchIcon className="w-6 h-6 text-pink mb-3 shrink-0" />
+              <h3 className="font-serif text-foreground text-xl font-medium">
+                Traditional Wedding
+              </h3>
+              <p className="text-text-muted text-base font-light mt-1 leading-relaxed">
+                A celebration of our rich cultural heritage and traditions.
+              </p>
+              <div className="mt-4 flex items-center gap-2 text-text-muted text-base">
+                <ClockIcon className="w-4 h-4 shrink-0" />
+                <span>10:00 AM</span>
+              </div>
+              <div className="mt-2 flex items-start gap-2 text-base">
+                <MapPinIcon className="w-4 h-4 shrink-0 mt-0.5 text-foreground" />
+                <span>
+                  <span className="font-medium text-foreground">Bola Memorial Anglican Church Hall</span>
+                  <br />
+                  <span className="text-text-muted font-light">
+                    29, Mobolaji Bank-Anthony Way, Ikeja, Lagos
+                  </span>
+                </span>
+              </div>
+              <a
+                href={GOOGLE_MAPS_VENUE}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Google Maps directions to Bola Memorial Anglican Church Hall, Ikeja"
+                className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg border-2 border-pink text-pink py-2.5 px-4 text-base font-light w-fit hover:bg-pink/10 transition-colors"
+              >
+                <MapPinIcon className="w-4 h-4" />
+                Get Directions
+              </a>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delayMs={120}>
+            <div className="rounded-2xl bg-white border border-[#E3EAF3] shadow-sm py-6 px-6 flex flex-col">
+              <HeartOutline className="w-6 h-6 text-pink-light mb-3 shrink-0" />
+              <h3 className="font-serif text-foreground text-xl font-medium">Reception</h3>
+              <p className="text-text-muted text-base font-light mt-1 leading-relaxed">
+                Join us for food, music, and joyful celebration as we begin our forever.
+              </p>
+              <div className="mt-4 flex items-center gap-2 text-text-muted text-base">
+                <ClockIcon className="w-4 h-4 shrink-0" />
+                <span>1:00 PM</span>
+              </div>
+              <div className="mt-2 flex items-start gap-2 text-base">
+                <MapPinIcon className="w-4 h-4 shrink-0 mt-0.5 text-foreground" />
+                <span>
+                  <span className="font-medium text-foreground">Bola Memorial Anglican Church Hall</span>
+                  <br />
+                  <span className="text-text-muted font-light">
+                    29, Mobolaji Bank-Anthony Way, Ikeja, Lagos
+                  </span>
+                </span>
+              </div>
+              <a
+                href={GOOGLE_MAPS_VENUE}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Google Maps directions to Bola Memorial Anglican Church Hall, Ikeja"
+                className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg border-2 border-pink-light text-pink-light py-2.5 px-4 text-base font-light w-fit hover:bg-pink-light/10 transition-colors"
+              >
+                <MapPinIcon className="w-4 h-4" />
+                Get Directions
+              </a>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delayMs={160}>
+            <div className="rounded-2xl bg-[#F8FBFF] border border-[#E3EAF3] py-8 px-6 flex flex-col items-center justify-center text-center shadow-sm">
+              <p className="text-pink text-sm font-light tracking-[0.2em] uppercase mb-1">
+                Friday
+              </p>
+              <p className="font-serif text-5xl md:text-6xl font-semibold text-foreground">13</p>
+              <p className="text-text-muted text-base font-light mt-1">November 2026</p>
+            </div>
+          </ScrollReveal>
+        </div>
+
+        {/* Event ticket cards (replaced by the previous template above)
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
           <ScrollReveal className="h-full">
             <EventDateCard />
           </ScrollReveal>
@@ -193,10 +355,11 @@ export default function Home() {
             <EventVenueCard directionsHref={GOOGLE_MAPS_VENUE} />
           </ScrollReveal>
         </div>
+        */}
       </section>
 
       {/* Psalm 118:24 verse cards */}
-      <VerseCards />
+      {/* <VerseCards /> */}
 
       {/* What to Wear / Dress Code — colour code layout */}
       <section
@@ -289,6 +452,96 @@ export default function Home() {
       {/* Gift Registry */}
       <section
         id="gifts"
+        className="relative z-10 py-16 md:py-24 px-6 flex flex-col items-center"
+      >
+        <p className="text-pink text-sm font-light tracking-[0.2em] uppercase mb-3">
+          Your presence is our present
+        </p>
+        <h2 className="font-serif text-3xl md:text-5xl text-foreground text-center font-semibold">
+          Gift Registry
+        </h2>
+        <GiftIcon className="w-8 h-8 text-pink mt-4 mb-10" aria-hidden />
+
+        <ScrollReveal className="w-full max-w-2xl">
+          <div className="w-full rounded-2xl bg-white shadow-sm border border-[#E3EAF3] py-8 px-6 md:px-10">
+            <div className="flex justify-center mb-4">
+              <span className="text-pink text-2xl" aria-hidden>♥</span>
+            </div>
+            <h3 className="font-serif text-foreground text-2xl font-medium text-center mb-4">
+              Cash Gifts &amp; Well Wishes
+            </h3>
+            <p className="text-text-muted text-base font-light text-center leading-relaxed max-w-lg mx-auto mb-8">
+              Your presence at our wedding is the greatest gift of all. However, if you wish to bless
+              us, we gratefully welcome cash gifts or any item you would love to give us as we begin
+              this new chapter together.
+            </p>
+
+            <p className="text-foreground text-sm font-light tracking-[0.15em] uppercase text-center mb-4">
+              Account details
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="space-y-3">
+                <p className="text-pink text-sm font-light tracking-[0.2em] uppercase text-center mb-3">
+                  Feranmi
+                </p>
+                <div>
+                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Account Number</p>
+                  <CopyableField value="2437513072" />
+                </div>
+                <div>
+                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Bank Name</p>
+                  <CopyableField value="Zenith Bank" />
+                </div>
+                <div>
+                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Account Name</p>
+                  <CopyableField value="Soje Anuoluwapo Deborah" />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <p className="text-pink text-sm font-light tracking-[0.2em] uppercase text-center mb-3">
+                  Ademola
+                </p>
+                <div>
+                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Account Number</p>
+                  <CopyableField value="2129725932" />
+                </div>
+                <div>
+                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Bank Name</p>
+                  <CopyableField value="UBA" />
+                </div>
+                <div>
+                  <p className="text-text-muted text-sm uppercase tracking-wider mb-1">Account Name</p>
+                  <CopyableField value="Emmanuel Segun Ademola" />
+                </div>
+              </div>
+            </div>
+
+            <blockquote className="text-center border-t border-[#D4AF37]/35 pt-6 space-y-6">
+              <div>
+                <p className="text-text-muted text-base font-serif italic leading-relaxed">
+                  &ldquo;This is the day that the LORD has made; we will rejoice and be glad in it.&rdquo;
+                </p>
+                <cite className="not-italic block text-text-muted text-base font-light mt-2">
+                  – Psalm 118:24
+                </cite>
+              </div>
+              <div>
+                <p className="text-text-muted text-base font-serif italic leading-relaxed">
+                  Each of you should give what you have decided in your heart to give, not
+                  reluctantly or under compulsion, for God loves a cheerful giver.
+                </p>
+                <cite className="not-italic block text-text-muted text-base font-light mt-2">
+                  – 2 Corinthians 9:7
+                </cite>
+              </div>
+            </blockquote>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* Gift Registry — card design (replaced by the previous template above)
+      <section
+        id="gifts"
         className="relative z-10 py-12 md:py-16 lg:py-24 px-5 sm:px-6 flex flex-col items-center"
       >
         <p className="text-pink text-center text-xs sm:text-sm font-light tracking-[0.2em] uppercase mb-3">
@@ -333,35 +586,28 @@ export default function Home() {
           </div>
         </ScrollReveal>
       </section>
+      */}
 
       {/* Countdown + RSVP section */}
       <section
         id="rsvp"
         className="relative z-10 scroll-mt-24 py-12 md:py-16 lg:py-24 px-5 sm:px-6 flex flex-col items-center"
       >
-        <ScrollReveal className="flex w-full justify-center">
-          <div className="countdown-panel">
-            <div className="countdown-panel-glow" aria-hidden />
-            <p className="countdown-eyebrow">
-              <span aria-hidden>♡</span>
-              <span>Counting down</span>
-              <span aria-hidden>♡</span>
-            </p>
-            <h2 className="countdown-title">
-              Until We Say <span className="whitespace-nowrap">&ldquo;I Do&rdquo;</span>
-            </h2>
-            <div className="countdown-divider" aria-hidden>
-              <span>✦</span>
-            </div>
+        {/* Counting down header */}
+        <p className="text-pink text-base font-light tracking-[0.25em] uppercase flex items-center justify-center gap-2 mb-3">
+          <span aria-hidden>♡</span>
+          <span>Counting down</span>
+          <span aria-hidden>♡</span>
+        </p>
+        <h2 className="font-serif text-3xl md:text-4xl text-foreground text-center mb-10">
+          Until We Say &ldquo;I Do&rdquo;
+        </h2>
 
-            <CountdownTimer />
+        {/* Countdown timer */}
+        <CountdownTimer />
 
-            <p className="countdown-date">Friday · 13 November 2026 · Ikeja, Lagos</p>
-
-            {/* Add to Calendar — downloads .ics (Apple, Google, Outlook, etc.) */}
-            <AddToCalendar />
-          </div>
-        </ScrollReveal>
+        {/* Add to Calendar — downloads .ics (Apple, Google, Outlook, etc.) */}
+        <AddToCalendar />
 
         {/* RSVP */}
         <h3 className="font-serif text-foreground text-2xl md:text-3xl uppercase tracking-wide mt-16 mb-3">
@@ -371,28 +617,33 @@ export default function Home() {
           RSVP contact details coming soon.
         </p>
 
-        {/* Quotes */}
-        <div className="blessing-cards">
-          <ScrollReveal className="flex">
-            <blockquote className="blessing-card blessing-card--emerald">
-              <span className="blessing-card-mark" aria-hidden>&ldquo;</span>
-              <p className="blessing-card-text">
-                Love is patient, love is kind. It does not envy, it does not boast, it is not proud.
+        {/* Quote */}
+        <ScrollReveal className="mt-14 max-w-xl">
+          <blockquote className="text-center rounded-2xl bg-[#F8FBFF] border border-[#E3EAF3] shadow-sm py-8 px-6 md:px-8 space-y-6">
+            <div>
+              <p className="font-serif text-foreground text-xl md:text-2xl italic leading-relaxed">
+                &ldquo;Love is patient, love is kind. It does not envy, it does not boast, it is not
+                proud.&rdquo;
               </p>
-              <cite className="blessing-card-cite">1 Corinthians 13:4</cite>
-            </blockquote>
-          </ScrollReveal>
-          <ScrollReveal delayMs={120} className="flex">
-            <blockquote className="blessing-card blessing-card--gold">
-              <span className="blessing-card-mark" aria-hidden>&ldquo;</span>
-              <p className="blessing-card-text">
-                The Lord bless thee, and keep thee: the Lord make his face shine upon thee, and be
-                gracious unto thee.
+              <cite className="not-italic block text-foreground text-base font-light mt-3">
+                — 1 Corinthians 13:4
+              </cite>
+            </div>
+            <div>
+              <p className="font-serif text-foreground text-xl md:text-2xl italic leading-relaxed">
+                &ldquo;The Lord bless thee, and keep thee: the Lord make his face shine upon thee,
+                and be gracious unto thee.&rdquo;
               </p>
-              <cite className="blessing-card-cite">Numbers 6:24–25</cite>
-            </blockquote>
-          </ScrollReveal>
-        </div>
+              <cite className="not-italic block text-foreground text-base font-light mt-3">
+                — Numbers 6:24–25
+              </cite>
+            </div>
+          </blockquote>
+        </ScrollReveal>
+
+        <ScrollReveal className="mt-8 w-full max-w-4xl">
+          <HotelContacts />
+        </ScrollReveal>
       </section>
 
       <BackToTopButton />

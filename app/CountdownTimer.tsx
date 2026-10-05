@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { WEDDING_COUNTDOWN_UTC } from "@/lib/wedding-calendar";
 
 const WEDDING_DATE = WEDDING_COUNTDOWN_UTC;
-const RING_RADIUS = 44;
-const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
 type Remaining = { days: number; hours: number; minutes: number; seconds: number };
 
@@ -23,31 +21,6 @@ function getRemaining(): Remaining {
   };
 }
 
-function Ring({ value, max, label, display }: { value: number; max: number; label: string; display: string }) {
-  const fraction = Math.min(1, value / max);
-  return (
-    <div className="countdown-unit">
-      <div className="countdown-ring">
-        <svg viewBox="0 0 100 100" aria-hidden>
-          <circle className="countdown-ring-track" cx="50" cy="50" r={RING_RADIUS} />
-          <circle
-            className="countdown-ring-progress"
-            cx="50"
-            cy="50"
-            r={RING_RADIUS}
-            strokeDasharray={RING_CIRCUMFERENCE}
-            strokeDashoffset={RING_CIRCUMFERENCE * (1 - fraction)}
-          />
-        </svg>
-        <span key={display} className="countdown-value">
-          {display}
-        </span>
-      </div>
-      <span className="countdown-label">{label}</span>
-    </div>
-  );
-}
-
 export default function CountdownTimer() {
   const [remaining, setRemaining] = useState<Remaining | null>(null);
 
@@ -62,19 +35,30 @@ export default function CountdownTimer() {
   }, []);
 
   const units = [
-    { key: "days", label: "Days", max: 365 },
-    { key: "hours", label: "Hours", max: 24 },
-    { key: "minutes", label: "Minutes", max: 60 },
-    { key: "seconds", label: "Seconds", max: 60 },
-  ] as const;
+    { label: "DAYS", value: remaining ? String(remaining.days) : "--" },
+    { label: "HOURS", value: remaining ? pad(remaining.hours) : "--" },
+    { label: "MINUTES", value: remaining ? pad(remaining.minutes) : "--" },
+    { label: "SECONDS", value: remaining ? pad(remaining.seconds) : "--" },
+  ];
 
   return (
-    <div className="countdown-grid" role="timer" aria-live="off">
-      {units.map(({ key, label, max }) => {
-        const value = remaining ? remaining[key] : 0;
-        const display = remaining ? (key === "days" ? String(value) : pad(value)) : "--";
-        return <Ring key={key} value={value} max={max} label={label} display={display} />;
-      })}
+    <div className="flex items-center justify-center gap-2 sm:gap-3">
+      {units.map(({ value, label }, i) => (
+        <div key={label} className="flex items-center gap-2 sm:gap-3">
+          <div
+            className="countdown-attention w-16 sm:w-24 rounded-xl bg-white/80 shadow-sm py-4 px-2 flex flex-col items-center"
+            style={{ animationDelay: `${i * 140}ms` }}
+          >
+            <span className="font-serif text-3xl sm:text-4xl font-semibold text-foreground">
+              {value}
+            </span>
+            <span className="text-pink text-xs sm:text-sm font-light tracking-widest uppercase mt-1">
+              {label}
+            </span>
+          </div>
+          {i < 3 && <span className="text-text-muted/50 text-xl">·</span>}
+        </div>
+      ))}
     </div>
   );
 }

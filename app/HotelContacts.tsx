@@ -1,9 +1,12 @@
-const HOTELS = [
-  { name: "Academy Suit", phone: "08176666602", tel: "+2348176666602" },
-  { name: "Plams 77", phone: "08188422222", tel: "+2348188422222" },
-  { name: "Carlton Gate", phone: "08126236287", tel: "+2348126236287" },
-  { name: "Waterfield Hotel, Akobo", phone: "07033307129", tel: "+2347033307129" },
-] as const;
+type Hotel = { name: string; phone: string; tel: string };
+
+/** Add hotels as `{ name: "Hotel name", phone: "08012345678", tel: "+2348012345678" }`. */
+const HOTELS: Hotel[] = [
+  // { name: "Academy Suit", phone: "08176666602", tel: "+2348176666602" },
+  // { name: "Plams 77", phone: "08188422222", tel: "+2348188422222" },
+  // { name: "Carlton Gate", phone: "08126236287", tel: "+2348126236287" },
+  // { name: "Waterfield Hotel, Akobo", phone: "07033307129", tel: "+2347033307129" },
+];
 
 function PhoneIcon({ className }: { className?: string }) {
   return (
@@ -24,10 +27,16 @@ export default function HotelContacts() {
       </p>
 
       <div className="mt-6 overflow-hidden rounded-xl border border-[#E3EAF3] bg-white/70">
-        <div className="grid grid-cols-[1fr_auto] gap-x-6 border-b border-[#E3EAF3] bg-[#F8FBFF] px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-foreground md:px-6 md:text-sm">
-          <span>Hotel name</span>
-          <span>Number</span>
-        </div>
+        {HOTELS.length === 0 ? (
+          <p className="px-5 py-6 text-center text-base font-light italic text-text-muted md:px-6 md:text-lg">
+            Hotel details coming soon.
+          </p>
+        ) : (
+          <div className="grid grid-cols-[1fr_auto] gap-x-6 border-b border-[#E3EAF3] bg-[#F8FBFF] px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-foreground md:px-6 md:text-sm">
+            <span>Hotel name</span>
+            <span>Number</span>
+          </div>
+        )}
         <ul className="divide-y divide-[#E3EAF3]">
           {HOTELS.map((hotel) => (
             <li

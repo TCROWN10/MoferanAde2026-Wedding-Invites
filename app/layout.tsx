@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import BackgroundMusic from "./BackgroundMusic";
+// import BackgroundMusic from "./BackgroundMusic";
 import { WeddingAudioProvider } from "./WeddingAudioContext";
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased font-sans">
         <WeddingAudioProvider>
-          <BackgroundMusic />
+          {/* <BackgroundMusic /> */}
           {children}
         </WeddingAudioProvider>
       </body>

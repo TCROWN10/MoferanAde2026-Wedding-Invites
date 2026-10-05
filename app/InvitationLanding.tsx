@@ -3,15 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { type CSSProperties } from "react";
-import { Playfair_Display, DM_Sans } from "next/font/google";
+import { Great_Vibes } from "next/font/google";
 import { LANDING_RING_PHOTOS } from "@/lib/wedding-photos";
-import { WEDDING_PLAY_AFTER_NAV_KEY } from "./WeddingAudioContext";
+import { WEDDING_PLAY_AFTER_NAV_KEY, useWeddingAudio } from "./WeddingAudioContext";
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["700", "800", "900"],
-});
-const ui = DM_Sans({ subsets: ["latin"], weight: ["600", "700", "800"] });
+const script = Great_Vibes({ subsets: ["latin"], weight: "400" });
 
 const RING_STROKE = "#d8bc82";
 
@@ -133,10 +129,10 @@ const ORBIT_BY_RING = RING_CONFIG.map((ring, i) => {
 });
 
 export default function InvitationLanding() {
+  const { tryPlay } = useWeddingAudio();
+
   return (
-    <section
-      className={`relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-[#f5f5f0] px-2 py-10 sm:px-4 md:px-8 ${ui.className}`}
-    >
+    <section className="landing-page relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-2 py-10 sm:px-4 md:px-8">
       <div className="relative mx-auto aspect-square w-full max-w-[min(92vw,1040px)] -translate-y-7 origin-center sm:max-w-[min(100vw,1040px)] sm:translate-y-0">
         <svg
           className="pointer-events-none absolute inset-0 z-[1] h-full w-full"
@@ -236,14 +232,20 @@ export default function InvitationLanding() {
 
         <div className="absolute inset-0 z-20 flex items-center justify-center">
           <div
-            className="flex min-w-0 flex-col items-center justify-center px-[7%] py-[6%] text-center md:px-[5%]"
+            className="landing-medallion"
             style={{ width: INNER_DISC_PCT, maxWidth: INNER_DISC_PCT }}
           >
-            <h1
-              className={`${playfair.className} text-balance font-black leading-tight tracking-tight text-foreground text-[clamp(1.35rem,calc(0.85rem+3.8vw),2.85rem)]`}
-            >
-              Feranmi <span className="font-black text-foreground/90">&amp;</span> Ademola
+            <div className="landing-medallion-shine" aria-hidden />
+            <p className="landing-medallion-eyebrow">You&apos;re invited</p>
+            <h1 className={`${script.className} landing-medallion-names`}>
+              Feranmi{" "}
+              <span className="whitespace-nowrap">
+                <span className="mr-[0.18em]">&amp;</span>Ademola
+              </span>
             </h1>
+            <p className="landing-medallion-date">
+              <span className="event-ticket-foil">13 · 11 · 2026</span>
+            </p>
             <Link
               href="/celebration"
               onClick={() => {
@@ -252,8 +254,9 @@ export default function InvitationLanding() {
                 } catch {
                   /* private mode */
                 }
+                tryPlay().catch(() => {});
               }}
-              className="mt-5 inline-flex min-h-10 w-auto shrink-0 items-center justify-center self-center whitespace-nowrap rounded-full border-2 border-[#046c4e] bg-[#f7e7ce] px-4 py-2 text-sm font-semibold tracking-wide text-foreground shadow-sm transition-colors hover:bg-[#efd9b0] md:mt-6 md:px-5 md:py-2.5"
+              className="landing-medallion-cta"
             >
               Open Invitation
             </Link>
@@ -261,19 +264,13 @@ export default function InvitationLanding() {
         </div>
       </div>
 
-      <div
-        className="mx-auto mt-2 max-w-sm rounded-xl border border-[#046c4e]/45 bg-[#f7e7ce]/90 px-4 py-3 text-center shadow-sm sm:mt-4"
-        role="note"
-      >
-        <p className="text-sm font-bold tracking-wide text-[#046c4e]">
-          No Access Card — No Entry
-        </p>
-        <p className="mt-1 text-xs font-semibold text-foreground/75">
-        Kindly contact the organizer for your access card.
-        </p>
-        <p className="mt-1 text-xs font-semibold text-foreground/75">
-          Thank you
-        </p>
+      <div className="landing-note" role="note">
+        <p className="landing-note-title">No Access Card — No Entry</p>
+        <div className="landing-note-divider" aria-hidden>
+          <span>♥</span>
+        </div>
+        <p className="landing-note-text">Kindly contact the organizer for your access card.</p>
+        <p className="landing-note-text">Thank you</p>
       </div>
     </section>
   );

@@ -18,8 +18,9 @@ export const WEDDING_PLAY_AFTER_NAV_KEY = "weddingPlayAfterNav";
 
 type WeddingAudioContextValue = {
   tryPlay: () => Promise<void>;
+  /** True on `/celebration` whenever the music is not playing, so the play button can show. */
   needsUserPlay: boolean;
-  /** True only after the guest clicked Open Invitation on the landing page. */
+  /** False on the landing page, or when the audio file failed to load. */
   musicEnabled: boolean;
 };
 
@@ -33,29 +34,23 @@ export function useWeddingAudio() {
   return ctx;
 }
 
-/** Shared audio for `/celebration` only — stays silent until the envelope seal is opened. */
+/** Shared audio for `/celebration` only — starts from the landing page "Open Invitation" tap. */
 export function WeddingAudioProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [needsUserPlay, setNeedsUserPlay] = useState(false);
-  const [musicEnabled, setMusicEnabled] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [audioAvailable, setAudioAvailable] = useState(true);
   const isLanding = pathname === "/";
 
   const startedRef = useRef(false);
 
-  /** Must be called from a user gesture (the envelope seal opening) so mobile browsers allow sound. */
+  /** Must be called from a user gesture (the "Open Invitation" tap) so mobile browsers allow sound. */
   const tryPlay = useCallback(() => {
     const el = audioRef.current;
     if (!el) return Promise.resolve();
     startedRef.current = true;
-    setMusicEnabled(true);
     el.loop = true;
-    return el.play().then(
-      () => setNeedsUserPlay(false),
-      () => {
-        setNeedsUserPlay(true);
-      },
-    );
+    return el.play().catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -71,10 +66,16 @@ export function WeddingAudioProvider({ children }: { children: ReactNode }) {
       a.currentTime = 0;
       a.play().catch(() => {});
     };
+    const onPlay = () => setPlaying(true);
+    const onPause = () => setPlaying(false);
 
     el.addEventListener("ended", onEnded);
+    el.addEventListener("play", onPlay);
+    el.addEventListener("pause", onPause);
     return () => {
       el.removeEventListener("ended", onEnded);
+      el.removeEventListener("play", onPlay);
+      el.removeEventListener("pause", onPause);
     };
   }, []);
 
@@ -85,20 +86,39 @@ export function WeddingAudioProvider({ children }: { children: ReactNode }) {
     startedRef.current = false;
   }, [isLanding]);
 
+  /**
+   * Browsers block sound on a fresh page load until the guest interacts, so if the
+   * "Open Invitation" tap didn't start playback, start it on their first touch, click or key press.
+   */
+  useEffect(() => {
+    if (isLanding) return;
+    const el = audioRef.current;
+    if (!el) return;
+    if (el.paused) void tryPlay();
+
+    const events = ["pointerdown", "touchend", "click", "keydown"] as const;
+    const onInteract = () => {
+      if (audioRef.current?.paused) void tryPlay();
+    };
+    events.forEach((e) => window.addEventListener(e, onInteract, { passive: true }));
+    return () => events.forEach((e) => window.removeEventListener(e, onInteract));
+  }, [isLanding, tryPlay]);
+
   useEffect(() => {
     const onVis = () => {
       const el = audioRef.current;
       if (!el || !startedRef.current || document.hidden) return;
-      el.play().catch(() => setNeedsUserPlay(true));
+      el.play().catch(() => {});
     };
     document.addEventListener("visibilitychange", onVis);
     return () => document.removeEventListener("visibilitychange", onVis);
   }, []);
 
+  const musicEnabled = audioAvailable && !isLanding;
   const value: WeddingAudioContextValue = {
     tryPlay,
-    needsUserPlay: needsUserPlay && !isLanding,
-    musicEnabled: musicEnabled && !isLanding,
+    needsUserPlay: musicEnabled && !playing,
+    musicEnabled,
   };
 
   return (
@@ -107,12 +127,9 @@ export function WeddingAudioProvider({ children }: { children: ReactNode }) {
         ref={audioRef}
         src={WEDDING_AUDIO_SRC}
         loop
-        preload="metadata"
+        preload="auto"
         aria-hidden
-        onError={() => {
-          setNeedsUserPlay(false);
-          setMusicEnabled(false);
-        }}
+        onError={() => setAudioAvailable(false)}
       />
       {children}
     </WeddingAudioContext.Provider>
