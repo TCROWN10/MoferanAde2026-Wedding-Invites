@@ -214,8 +214,42 @@ export default function AboutTheCouple() {
               >
                 Soje Anuoluwapo Feranmi
               </h3>
+              <p className="mb-0 text-base font-bold leading-tight text-foreground">
+                To the love of my life,
+              </p>
               <div className={`${letter.className} mt-1 space-y-3 text-[0.84rem] leading-snug text-foreground`}>
-                <p className="italic text-text-muted">A note from the bride is coming soon. ❤️</p>
+                <p>
+                  If someone told me a few years ago that you would be my husband, I would have smiled,
+                  but I wouldn&apos;t have fully understood how blessed I would be.
+                </p>
+                <p>
+                  You are my answered prayer, my calm in the storm, my happy place. Being loved by you
+                  is the easiest and most beautiful thing I have ever known.
+                </p>
+                <p>
+                  You came into my life and you made everything softer, brighter, and more meaningful.
+                  With you, I have learnt that real love is patient, kind, intentional, and safe.
+                </p>
+                <p>
+                  Thank you for seeing me, truly seeing me, and still choosing me every single day.
+                  Thank you for your prayers, your patience, and for loving even the parts of me I was
+                  still learning to love.
+                </p>
+                <p>
+                  I vow to be your peace, your home, and your biggest cheerleader. I promise to hold
+                  your hand through every season, to laugh with you until our stomachs hurt, and to
+                  love you more than yesterday for the rest of our lives.
+                </p>
+                <p>I love you beyond words. I can&apos;t wait to be your wife.</p>
+                <p>
+                  I promise to choose you, to respect you, to support your dreams as you have
+                  supported mine.
+                </p>
+                <p className="font-medium text-foreground">
+                  Forever yours,
+                  <br />
+                  Your soon-to-be Mrs. ❤️
+                </p>
               </div>
             </RevealOnScroll>
           </div>
