@@ -11,6 +11,8 @@ export const GALLERY_PHOTOS = [
   "/IMG_7067.jpeg",
   "/IMG_7072.jpeg",
   "/IMG_7071.jpeg",
+  "/IMG_7012.jpeg",
+  "/IMG_7013.jpeg",
 ] as const;
 
 export type GalleryPhotoSrc = (typeof GALLERY_PHOTOS)[number];
@@ -21,8 +23,10 @@ export type WeddingPhotoSrc = GalleryPhotoSrc;
 
 export const GROOM_PORTRAIT: GalleryPhotoSrc = "/IMG_7010.jpeg";
 export const BRIDE_PORTRAIT: GalleryPhotoSrc = "/IMG_7011.jpeg";
-/** About the Couple — bride letter section (studio portrait). */
-export const ABOUT_BRIDE_IMAGE: GalleryPhotoSrc = "/IMG_7011.jpeg";
+/** About the Couple — photo beside the groom's letter. */
+export const ABOUT_GROOM_IMAGE: GalleryPhotoSrc = "/IMG_7012.jpeg";
+/** About the Couple — photo beside the bride's letter. */
+export const ABOUT_BRIDE_IMAGE: GalleryPhotoSrc = "/IMG_7013.jpeg";
 export const SITE_ICON: GalleryPhotoSrc = "/IMG_7011.jpeg";
 
 /** Hero background slideshow — face-forward shots with tuned crop anchors. */
@@ -76,4 +80,6 @@ export const GALLERY_CAPTIONS: readonly string[] = [
   "Poised, radiant, and ready for forever.",
   "Double denim, double the fun—our best friend energy.",
   "Two seats, one heart, endless conversations.",
+  "Eyes locked, hearts certain—this is where forever begins.",
+  "A kiss on the hand, a promise for a lifetime.",
 ];

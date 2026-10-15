@@ -8,10 +8,10 @@ const script = Great_Vibes({ subsets: ["latin"], weight: "400" });
 const body = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "600"] });
 const letter = Poppins({ subsets: ["latin"], weight: ["400", "500"] });
 
-import { ABOUT_BRIDE_IMAGE, GROOM_PORTRAIT } from "@/lib/wedding-photos";
+import { ABOUT_BRIDE_IMAGE, ABOUT_GROOM_IMAGE } from "@/lib/wedding-photos";
 
 /** Portrait picks — swap paths in `lib/wedding-photos.ts`. */
-const GROOM_IMAGE = GROOM_PORTRAIT;
+const GROOM_IMAGE = ABOUT_GROOM_IMAGE;
 const BRIDE_IMAGE = ABOUT_BRIDE_IMAGE;
 
 function SectionDivider() {
@@ -164,7 +164,11 @@ export default function AboutTheCouple() {
         <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2 md:items-start md:gap-10 lg:gap-12">
           <div className="self-start">
             <RevealOnScroll from="left">
-              <AboutImage src={GROOM_IMAGE} alt="Emmanuel Segun Ademola" objectPosition="42% 30%" />
+              <AboutImage
+                src={GROOM_IMAGE}
+                alt="Emmanuel Segun Ademola and Soje Anuoluwapo Feranmi"
+                objectPosition="50% 45%"
+              />
             </RevealOnScroll>
           </div>
           <div className="min-w-0 self-start text-left">
@@ -258,7 +262,7 @@ export default function AboutTheCouple() {
               <AboutImage
                 src={BRIDE_IMAGE}
                 alt="Soje Anuoluwapo Feranmi"
-                objectPosition="52% 20%"
+                objectPosition="50% 45%"
               />
             </RevealOnScroll>
           </div>
