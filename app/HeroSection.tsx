@@ -34,10 +34,14 @@ function HeroPortrait({
   src,
   alt,
   objectPosition,
+  scale = 1,
+  transformOrigin = "50% 50%",
 }: {
   src: string;
   alt: string;
   objectPosition: string;
+  scale?: number;
+  transformOrigin?: string;
 }) {
   return (
     <div
@@ -49,7 +53,11 @@ function HeroPortrait({
         alt={alt}
         fill
         className="object-cover"
-        style={{ objectPosition }}
+        style={{
+          objectPosition,
+          transform: scale === 1 ? undefined : `scale(${scale})`,
+          transformOrigin,
+        }}
         sizes="(max-width: 768px) 18vw, 120px"
       />
     </div>
@@ -306,6 +314,8 @@ export default function HeroSection() {
                 src={HERO_PORTRAITS.bride.src}
                 alt={HERO_PORTRAITS.bride.alt}
                 objectPosition={HERO_PORTRAITS.bride.objectPosition}
+                scale={HERO_PORTRAITS.bride.scale}
+                transformOrigin={HERO_PORTRAITS.bride.transformOrigin}
               />
 
               <h1
@@ -318,6 +328,8 @@ export default function HeroSection() {
                 src={HERO_PORTRAITS.groom.src}
                 alt={HERO_PORTRAITS.groom.alt}
                 objectPosition={HERO_PORTRAITS.groom.objectPosition}
+                scale={HERO_PORTRAITS.groom.scale}
+                transformOrigin={HERO_PORTRAITS.groom.transformOrigin}
               />
             </div>
 

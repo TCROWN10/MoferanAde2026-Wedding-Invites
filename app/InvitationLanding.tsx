@@ -34,6 +34,7 @@ const RING_CONFIG = RING_RADII.map((radius, i) => ({
   radius,
   src: LANDING_RING_PHOTOS[i].src,
   alt: LANDING_RING_PHOTOS[i].alt,
+  objectPosition: LANDING_RING_PHOTOS[i].objectPosition,
 }));
 
 const RING_MAX = RING_CONFIG[0].radius;
@@ -57,6 +58,7 @@ function orbitBubbleSize(ringRadius: number): string {
 function OrbitPhotoBubble({
   src,
   alt,
+  objectPosition,
   ringRadius,
   durationSec,
   clockwise,
@@ -64,6 +66,7 @@ function OrbitPhotoBubble({
 }: {
   src: string;
   alt: string;
+  objectPosition: string;
   ringRadius: number;
   durationSec: number;
   clockwise: boolean;
@@ -111,6 +114,7 @@ function OrbitPhotoBubble({
               alt={alt}
               fill
               className="scale-110 object-cover"
+              style={{ objectPosition }}
               sizes="72px"
             />
           </div>
@@ -126,6 +130,7 @@ const ORBIT_BY_RING = RING_CONFIG.map((ring, i) => {
     ringRadius: ring.radius,
     src: ring.src,
     alt: ring.alt,
+    objectPosition: ring.objectPosition,
     durationSec,
     clockwise: i % 2 === 0,
     phaseDelaySec: (i * durationSec) / 6,

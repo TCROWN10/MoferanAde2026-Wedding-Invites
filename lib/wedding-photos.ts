@@ -48,12 +48,12 @@ export const SITE_ICON: GalleryPhotoSrc = "/IMG_7011.jpeg";
 
 /** Hero background slideshow — face-forward shots with tuned crop anchors. */
 export const HERO_PHOTOS = [
+  { src: "/PABL1268.jpg", objectPosition: "50% 32%" },
   { src: "/PABL0905.jpg", objectPosition: "50% 48%" },
   { src: "/PABL0991.jpg", objectPosition: "55% 40%" },
   { src: "/PABL1041j.jpg", objectPosition: "50% 40%" },
   { src: "/PABL1041u.jpg", objectPosition: "50% 38%" },
   { src: "/PABL1095h.jpg", objectPosition: "50% 36%" },
-  { src: "/PABL1268.jpg", objectPosition: "50% 32%" },
   { src: "/PABL1310.jpg", objectPosition: "50% 38%" },
   { src: "/PABL1371.jpg", objectPosition: "50% 38%" },
   { src: "/PABL1401.jpg", objectPosition: "50% 38%" },
@@ -68,31 +68,35 @@ export const HERO_PHOTOS = [
   { src: "/PABL9526.jpg", objectPosition: "48% 30%" },
 ] as const;
 
-/** Circular portraits beside the hero title. */
+/** Circular portraits beside the hero title — traditional portraits. */
 export const HERO_PORTRAITS = {
   bride: {
-    src: BRIDE_PORTRAIT,
+    src: "/IMG_7069.jpeg" as GalleryPhotoSrc,
     alt: "Feranmi",
-    objectPosition: "51% 20%",
+    objectPosition: "50% 22%",
+    scale: 1,
+    transformOrigin: "50% 40%",
   },
   groom: {
-    src: GROOM_PORTRAIT,
+    src: "/IMG_7070.jpeg" as GalleryPhotoSrc,
     alt: "Ademola",
-    objectPosition: "10% 45%",
+    objectPosition: "50% 28%",
+    scale: 1.72,
+    transformOrigin: "34% 30%",
   },
 } as const;
 
 /**
- * Landing page orbit rings only — separate from gallery.
+ * Landing page orbit rings — traditional portraits only.
  * Do not add gallery-only photos here.
  */
 export const LANDING_RING_PHOTOS = [
-  { src: "/IMG_7010.jpeg", alt: "Ademola" },
-  { src: "/IMG_7011.jpeg", alt: "Feranmi" },
-  { src: "/IMG_7009.jpeg", alt: "Together" },
-  { src: "/IMG_7070.jpeg", alt: "Wedding moment" },
-  { src: "/IMG_7072.jpeg", alt: "Joy" },
-  { src: "/IMG_7068.jpeg", alt: "Celebration" },
+  { src: "/IMG_7070.jpeg", alt: "Together", objectPosition: "50% 28%" },
+  { src: "/IMG_7068.jpeg", alt: "Together", objectPosition: "50% 28%" },
+  { src: "/IMG_7069.jpeg", alt: "Feranmi", objectPosition: "50% 22%" },
+  { src: "/PABL1268.jpg", alt: "Together", objectPosition: "50% 18%" },
+  { src: "/PABL0991.jpg", alt: "Together", objectPosition: "50% 12%" },
+  { src: "/IMG_7067.jpeg", alt: "Feranmi", objectPosition: "50% 8%" },
 ] as const;
 
 /** Gallery captions — one per photo, same order as `GALLERY_PHOTOS`. */
