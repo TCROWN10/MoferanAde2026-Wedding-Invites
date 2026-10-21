@@ -167,7 +167,7 @@ export default function AboutTheCouple() {
               <AboutImage
                 src={GROOM_IMAGE}
                 alt="Emmanuel Segun Ademola and Soje Anuoluwapo Feranmi"
-                objectPosition="50% 45%"
+                objectPosition="50% 40%"
               />
             </RevealOnScroll>
           </div>
@@ -261,8 +261,8 @@ export default function AboutTheCouple() {
             <RevealOnScroll from="right">
               <AboutImage
                 src={BRIDE_IMAGE}
-                alt="Soje Anuoluwapo Feranmi"
-                objectPosition="50% 45%"
+                alt="Soje Anuoluwapo Feranmi and Emmanuel Segun Ademola"
+                objectPosition="50% 42%"
               />
             </RevealOnScroll>
           </div>

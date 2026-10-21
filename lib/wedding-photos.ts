@@ -41,9 +41,9 @@ export type WeddingPhotoSrc = GalleryPhotoSrc;
 export const GROOM_PORTRAIT: GalleryPhotoSrc = "/IMG_7010.jpeg";
 export const BRIDE_PORTRAIT: GalleryPhotoSrc = "/IMG_7011.jpeg";
 /** About the Couple — photo beside the groom's letter. */
-export const ABOUT_GROOM_IMAGE: GalleryPhotoSrc = "/IMG_7012.jpeg";
+export const ABOUT_GROOM_IMAGE: GalleryPhotoSrc = "/PABL9526.jpg";
 /** About the Couple — photo beside the bride's letter. */
-export const ABOUT_BRIDE_IMAGE: GalleryPhotoSrc = "/IMG_7013.jpeg";
+export const ABOUT_BRIDE_IMAGE: GalleryPhotoSrc = "/PABL9445.jpg";
 export const SITE_ICON: GalleryPhotoSrc = "/IMG_7011.jpeg";
 
 /** Hero background slideshow — face-forward shots with tuned crop anchors. */
