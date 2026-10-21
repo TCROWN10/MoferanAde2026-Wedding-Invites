@@ -87,16 +87,28 @@ export const HERO_PORTRAITS = {
 } as const;
 
 /**
- * Landing page orbit rings — traditional portraits only.
- * Do not add gallery-only photos here.
+ * Landing page orbit rings. Traditional and other portraits alternate,
+ * and each circle steps through this list.
  */
 export const LANDING_RING_PHOTOS = [
   { src: "/IMG_7070.jpeg", alt: "Together", objectPosition: "50% 28%" },
-  { src: "/IMG_7068.jpeg", alt: "Together", objectPosition: "50% 28%" },
-  { src: "/IMG_7069.jpeg", alt: "Feranmi", objectPosition: "50% 22%" },
+  { src: "/IMG_7011.jpeg", alt: "Feranmi", objectPosition: "50% 38%" },
   { src: "/PABL1268.jpg", alt: "Together", objectPosition: "50% 18%" },
+  { src: "/PABL9526.jpg", alt: "Together", objectPosition: "50% 32%" },
+  { src: "/IMG_7069.jpeg", alt: "Feranmi", objectPosition: "50% 22%" },
+  { src: "/IMG_7010.jpeg", alt: "Ademola", objectPosition: "42% 42%" },
   { src: "/PABL0991.jpg", alt: "Together", objectPosition: "50% 12%" },
+  { src: "/IMG_7072.jpeg", alt: "Joy", objectPosition: "50% 28%" },
+  { src: "/IMG_7068.jpeg", alt: "Together", objectPosition: "50% 28%" },
+  { src: "/IMG_7009.jpeg", alt: "Together", objectPosition: "55% 42%" },
   { src: "/IMG_7067.jpeg", alt: "Feranmi", objectPosition: "50% 8%" },
+  { src: "/PABL9419.jpg", alt: "Together", objectPosition: "50% 28%" },
+  { src: "/PABL1041u.jpg", alt: "Together", objectPosition: "50% 22%" },
+  { src: "/IMG_7023.jpeg", alt: "Together", objectPosition: "50% 40%" },
+  { src: "/PABL1401.jpg", alt: "Together", objectPosition: "50% 18%" },
+  { src: "/IMG_7013.jpeg", alt: "Feranmi", objectPosition: "50% 40%" },
+  { src: "/PABL0905.jpg", alt: "Together", objectPosition: "50% 12%" },
+  { src: "/IMG_7071.jpeg", alt: "Together", objectPosition: "50% 32%" },
 ] as const;
 
 /** Gallery captions — one per photo, same order as `GALLERY_PHOTOS`. */

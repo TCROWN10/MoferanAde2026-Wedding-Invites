@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import { LANDING_RING_PHOTOS } from "@/lib/wedding-photos";
 import { WEDDING_PLAY_AFTER_NAV_KEY, useWeddingAudio } from "./WeddingAudioContext";
@@ -30,12 +30,9 @@ const VIEWBOX_CENTER = VIEWBOX / 2;
 
 const RING_RADII = [236, 222, 208, 194, 182, 170] as const;
 
-const RING_CONFIG = RING_RADII.map((radius, i) => ({
-  radius,
-  src: LANDING_RING_PHOTOS[i].src,
-  alt: LANDING_RING_PHOTOS[i].alt,
-  objectPosition: LANDING_RING_PHOTOS[i].objectPosition,
-}));
+const RING_CONFIG = RING_RADII.map((radius) => ({ radius }));
+
+const CIRCLE_CHANGE_MS = 5200;
 
 const RING_MAX = RING_CONFIG[0].radius;
 const INNER_RING_RADIUS = RING_CONFIG[RING_CONFIG.length - 1].radius;
@@ -56,22 +53,37 @@ function orbitBubbleSize(ringRadius: number): string {
 }
 
 function OrbitPhotoBubble({
-  src,
-  alt,
-  objectPosition,
+  photos,
+  startIndex,
   ringRadius,
   durationSec,
   clockwise,
   phaseDelaySec,
 }: {
-  src: string;
-  alt: string;
-  objectPosition: string;
+  photos: readonly { src: string; alt: string; objectPosition: string }[];
+  startIndex: number;
   ringRadius: number;
   durationSec: number;
   clockwise: boolean;
   phaseDelaySec: number;
 }) {
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    let intervalId = 0;
+    const startId = window.setTimeout(() => {
+      setStep(1);
+      intervalId = window.setInterval(() => {
+        setStep((current) => current + 1);
+      }, CIRCLE_CHANGE_MS);
+    }, 1600 + startIndex * 700);
+    return () => {
+      window.clearTimeout(startId);
+      window.clearInterval(intervalId);
+    };
+  }, [startIndex]);
+
+  const photo = photos[(startIndex + step) % photos.length];
   const spin = clockwise ? "hero-orbit-spin-cw" : "hero-orbit-spin-ccw";
   const face = clockwise ? "hero-orbit-face-cw" : "hero-orbit-face-ccw";
   const diameterPct = `${((2 * ringRadius) / VIEWBOX) * 100}%`;
@@ -110,11 +122,12 @@ function OrbitPhotoBubble({
             }
           >
             <Image
-              src={src}
-              alt={alt}
+              key={photo.src}
+              src={photo.src}
+              alt={photo.alt}
               fill
-              className="scale-110 object-cover"
-              style={{ objectPosition }}
+              className="landing-circle-photo scale-110 object-cover"
+              style={{ objectPosition: photo.objectPosition }}
               sizes="72px"
             />
           </div>
@@ -128,9 +141,8 @@ const ORBIT_BY_RING = RING_CONFIG.map((ring, i) => {
   const durationSec = 36 - (i % 4) * 2 + (i === 0 ? 4 : 0);
   return {
     ringRadius: ring.radius,
-    src: ring.src,
-    alt: ring.alt,
-    objectPosition: ring.objectPosition,
+    photos: LANDING_RING_PHOTOS,
+    startIndex: i * 3,
     durationSec,
     clockwise: i % 2 === 0,
     phaseDelaySec: (i * durationSec) / 6,
