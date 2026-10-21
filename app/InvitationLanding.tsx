@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, type CSSProperties } from "react";
 import { Playfair_Display, DM_Sans } from "next/font/google";
-import { LANDING_RING_PHOTOS } from "@/lib/wedding-photos";
+import { LANDING_RING_PHOTOS, photoDisplaySrc } from "@/lib/wedding-photos";
 import { WEDDING_PLAY_AFTER_NAV_KEY, useWeddingAudio } from "./WeddingAudioContext";
 
 const playfair = Playfair_Display({
@@ -84,6 +84,12 @@ function OrbitPhotoBubble({
   }, [startIndex]);
 
   const photo = photos[(startIndex + step) % photos.length];
+
+  useEffect(() => {
+    const upcoming = photos[(startIndex + step + 1) % photos.length];
+    const img = new window.Image();
+    img.src = photoDisplaySrc(upcoming.src, "sm");
+  }, [photos, startIndex, step]);
   const spin = clockwise ? "hero-orbit-spin-cw" : "hero-orbit-spin-ccw";
   const face = clockwise ? "hero-orbit-face-cw" : "hero-orbit-face-ccw";
   const diameterPct = `${((2 * ringRadius) / VIEWBOX) * 100}%`;
@@ -123,10 +129,11 @@ function OrbitPhotoBubble({
           >
             <Image
               key={photo.src}
-              src={photo.src}
+              src={photoDisplaySrc(photo.src, "sm")}
               alt={photo.alt}
               fill
               className="landing-circle-photo scale-110 object-cover"
+              priority
               style={{ objectPosition: photo.objectPosition }}
               sizes="72px"
             />

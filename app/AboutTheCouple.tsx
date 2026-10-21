@@ -8,7 +8,7 @@ const script = Great_Vibes({ subsets: ["latin"], weight: "400" });
 const body = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "600"] });
 const letter = Poppins({ subsets: ["latin"], weight: ["400", "500"] });
 
-import { ABOUT_BRIDE_IMAGE, ABOUT_GROOM_IMAGE } from "@/lib/wedding-photos";
+import { ABOUT_BRIDE_IMAGE, ABOUT_GROOM_IMAGE, photoDisplaySrc } from "@/lib/wedding-photos";
 
 /** Portrait picks — swap paths in `lib/wedding-photos.ts`. */
 const GROOM_IMAGE = ABOUT_GROOM_IMAGE;
@@ -109,7 +109,7 @@ function RevealOnScroll({
   return (
     <div
       ref={ref}
-      className={`w-full transition-all duration-[850ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${
+      className={`w-full transition-all duration-[420ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${
         visible ? shown : hidden
       }`}
     >
@@ -133,7 +133,7 @@ function AboutImage({
       <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-2xl shadow-[0_12px_40px_-12px_rgba(45,45,45,0.25)] md:max-w-none">
         <div className="relative aspect-[3/4] w-full md:aspect-[4/5]">
           <Image
-            src={src}
+            src={photoDisplaySrc(src, "lg")}
             alt={alt}
             fill
             className="object-cover"

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { GALLERY_CAPTIONS, GALLERY_PHOTOS } from "@/lib/wedding-photos";
+import { GALLERY_CAPTIONS, GALLERY_PHOTOS, photoDisplaySrc } from "@/lib/wedding-photos";
 
 const GALLERY_SOURCE = GALLERY_PHOTOS.map((src, i) => ({
   src,
@@ -18,7 +18,7 @@ const MAX_ITEMS_PER_VIEW = 8;
 /** Never repeat photos to fill the grid — show each photo once when there are only a few. */
 const ITEMS_PER_VIEW = Math.min(MAX_ITEMS_PER_VIEW, GALLERY_SOURCE.length);
 const ROTATE_INTERVAL_MS = 11000;
-const TRANSITION_DURATION_MS = 1400;
+const TRANSITION_DURATION_MS = 500;
 /** In spotlight mode the grid stays 2×4; each tick shifts the window by one; every cell runs the roll animation. */
 const SPOTLIGHT_INTERVAL_MS = 8500;
 /** Delay between each cell’s roll starting (top-left → … → bottom-right, row by row). */
@@ -121,10 +121,10 @@ function GalleryImage({ src, caption }: { src: string; caption: string }) {
       ) : (
         <>
           <Image
-            src={src}
+            src={photoDisplaySrc(src, "lg")}
             alt={caption}
             fill
-            loading="eager"
+            loading="lazy"
             className="object-cover transition-transform duration-1000 ease-out motion-reduce:transition-none sm:group-hover:scale-105"
             sizes="(max-width: 639px) 100vw, (max-width: 1023px) 33vw, (max-width: 1279px) 25vw, 22vw"
             onError={() => setError(true)}
@@ -321,7 +321,7 @@ export default function PhotoGallery() {
 
   const swapClasses =
     "transition-opacity ease-in-out motion-reduce:transition-none";
-  const durationClass = "duration-[1400ms]";
+  const durationClass = "duration-500";
 
   return (
     <div className="w-full">

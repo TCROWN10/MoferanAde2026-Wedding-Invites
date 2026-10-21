@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Playfair_Display, DM_Sans } from "next/font/google";
-import { HERO_PHOTOS, HERO_PORTRAITS } from "@/lib/wedding-photos";
+import { HERO_PHOTOS, HERO_PORTRAITS, photoDisplaySrc } from "@/lib/wedding-photos";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -28,7 +28,7 @@ const HERO_ENTER_TRANSITIONS = [
 ] as const;
 
 const HERO_ROTATE_MS = 6000;
-const HERO_TRANSITION_MS = 1250;
+const HERO_TRANSITION_MS = 520;
 
 function HeroPortrait({
   src,
@@ -49,7 +49,7 @@ function HeroPortrait({
       aria-hidden={alt === ""}
     >
       <Image
-        src={src}
+        src={photoDisplaySrc(src, "sm")}
         alt={alt}
         fill
         className="object-cover"
@@ -144,6 +144,12 @@ export default function HeroSection() {
       if (revealTimeoutRef.current) clearTimeout(revealTimeoutRef.current);
     };
   }, []);
+
+  useEffect(() => {
+    const next = HERO_FRAMES[(visibleIndex + 1) % HERO_FRAMES.length];
+    const img = new window.Image();
+    img.src = photoDisplaySrc(next.src, "lg");
+  }, [visibleIndex]);
 
   useEffect(() => {
     if (menuOpen) {
@@ -269,13 +275,13 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-foreground/90">
           <div className="absolute inset-0 z-0 overflow-hidden">
             <Image
-              src={HERO_FRAMES[visibleIndex].src}
+              src={photoDisplaySrc(HERO_FRAMES[visibleIndex].src, "lg")}
               alt=""
               fill
               className={HERO_IMAGE_BASE_CLASS}
               style={{ objectPosition: HERO_FRAMES[visibleIndex].objectPosition }}
               sizes="100vw"
-              priority={visibleIndex === 0}
+              priority
             />
           </div>
           {incomingIndex !== null ? (
@@ -284,12 +290,13 @@ export default function HeroSection() {
               className={`absolute inset-0 z-[1] overflow-hidden ${incomingClass}`}
             >
               <Image
-                src={HERO_FRAMES[incomingIndex].src}
+                src={photoDisplaySrc(HERO_FRAMES[incomingIndex].src, "lg")}
                 alt=""
                 fill
                 className={HERO_IMAGE_BASE_CLASS}
                 style={{ objectPosition: HERO_FRAMES[incomingIndex].objectPosition }}
                 sizes="100vw"
+                priority
               />
             </div>
           ) : null}

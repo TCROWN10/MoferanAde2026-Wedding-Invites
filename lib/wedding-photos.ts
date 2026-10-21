@@ -144,3 +144,9 @@ export const GALLERY_CAPTIONS: readonly string[] = [
   "His smile, our beginning.",
   "In your arms, the world feels exactly right.",
 ];
+
+/** Smaller JPEG used on screen. Originals stay at the root path for downloads. */
+export function photoDisplaySrc(src: string, size: "lg" | "sm" = "lg"): string {
+  const file = src.slice(src.lastIndexOf("/") + 1).replace(/\.(jpeg|jpg|png)$/i, ".jpg");
+  return `/display/${size}/${file}`;
+}

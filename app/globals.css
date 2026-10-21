@@ -87,7 +87,7 @@ a[aria-disabled="true"] {
 }
 
 .hero-image-rise {
-  animation: hero-image-rise 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: hero-image-rise 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -110,7 +110,7 @@ a[aria-disabled="true"] {
 }
 
 .hero-image-circle {
-  animation: hero-circle-reveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: hero-circle-reveal 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: clip-path;
 }
 
@@ -160,19 +160,19 @@ a[aria-disabled="true"] {
 }
 
 .hero-slide-left {
-  animation: hero-slide-left 1.12s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: hero-slide-left 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .hero-slide-right {
-  animation: hero-slide-right 1.12s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: hero-slide-right 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .hero-slide-bottom {
-  animation: hero-slide-bottom 1.12s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: hero-slide-bottom 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .hero-slide-top {
-  animation: hero-slide-top 1.12s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: hero-slide-top 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -452,7 +452,7 @@ a[aria-disabled="true"] {
 }
 
 .landing-circle-photo {
-  animation: landing-circle-photo-in 700ms ease;
+  animation: landing-circle-photo-in 280ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
