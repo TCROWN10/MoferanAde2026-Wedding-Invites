@@ -159,7 +159,8 @@ export default function HeroSection() {
 
   return (
     <section className={`relative flex min-h-screen flex-col bg-background ${ui.className}`}>
-      <header className="relative z-30 flex flex-wrap items-center justify-between gap-3 border-b border-pink-light/40 bg-background px-4 py-4 md:px-10 lg:px-14">
+      <header className="relative z-30 border-b border-pink-light/40 bg-background">
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4 md:px-8">
         <a href="/celebration" className="group flex flex-col items-start gap-1">
           <div
             className={`${playfair.className} flex items-baseline gap-1 text-2xl font-black tracking-tight text-foreground sm:text-3xl md:text-[1.85rem] lg:text-4xl`}
@@ -173,7 +174,7 @@ export default function HeroSection() {
           <span
             className={`${playfair.className} text-[0.62rem] font-extrabold tracking-[0.32em] text-foreground sm:text-[0.68rem] md:text-xs`}
           >
-            #moFeranAde’26
+            moFeranAde’26
           </span>
         </a>
 
@@ -206,6 +207,7 @@ export default function HeroSection() {
         >
           <MenuIcon open={menuOpen} />
         </button>
+        </div>
       </header>
 
       <div

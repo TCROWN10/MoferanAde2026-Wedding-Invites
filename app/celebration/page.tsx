@@ -83,6 +83,23 @@ function CameraIcon({ className }: { className?: string }) {
   );
 }
 
+function MailIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M4 7l8 6 8-6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M19.11 4.89A9.9 9.9 0 0012.07 2C6.57 2 2.1 6.47 2.1 11.97c0 1.75.46 3.46 1.33 4.98L2 22l5.2-1.36a9.92 9.92 0 004.87 1.24h.01c5.5 0 9.97-4.47 9.97-9.97a9.9 9.9 0 00-2.94-7.02zm-7.04 15.3h-.01a8.2 8.2 0 01-4.18-1.14l-.3-.18-3.09.81.83-3.01-.2-.31a8.24 8.24 0 01-1.28-4.38c0-4.54 3.69-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 012.4 5.82c0 4.54-3.69 8.23-8.23 8.23zm4.51-6.18c-.25-.12-1.48-.73-1.71-.82-.23-.08-.4-.12-.56.13-.17.24-.65.82-.8.98-.14.16-.29.18-.54.06-.25-.12-1.05-.38-2-1.21a7.5 7.5 0 01-1.39-1.73c-.15-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.24.25-.4.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.77-1.84-.2-.47-.4-.4-.56-.41h-.48c-.16 0-.43.06-.66.31-.23.24-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.16 1.72 2.63 4.17 3.69.58.25 1.03.4 1.38.51.58.18 1.1.16 1.51.1.46-.07 1.48-.6 1.69-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z" />
+    </svg>
+  );
+}
+
 function GiftIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -680,6 +697,30 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
+      <footer className="relative z-10 border-t border-[#D4AF37]/35 px-6 py-8 text-center">
+        <div className="mx-auto flex w-full max-w-xl flex-wrap items-center justify-center gap-x-3 gap-y-2">
+          <p className="text-text-muted text-sm font-medium uppercase tracking-[0.2em]">Designed by</p>
+          <p className="bg-linear-to-r from-[#2F5DAA] via-[#D4AF37] to-[#2F5DAA] bg-clip-text text-lg font-black tracking-[0.14em] text-transparent">
+            TCROWN
+          </p>
+          <a
+            href="mailto:tcrown6254@gmail.com"
+            aria-label="Email TCROWN"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E3EAF3] bg-white text-[#2F5DAA] shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#D4AF37]/60 hover:shadow-md"
+          >
+            <MailIcon className="h-4.5 w-4.5" />
+          </a>
+          <a
+            href="https://wa.me/2349163232188"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat with TCROWN on WhatsApp"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E3EAF3] bg-white text-[#2F5DAA] shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#D4AF37]/60 hover:shadow-md"
+          >
+            <WhatsAppIcon className="h-4.5 w-4.5" />
+          </a>
+        </div>
+      </footer>
       <BackToTopButton />
     </div>
     </>
